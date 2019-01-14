@@ -1,0 +1,60 @@
+require: rubocop-rspec
+
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - '**/config.ru'
+    - '**/Rakefile'
+    - 'bin/**/*'
+    - 'tmp/**/*'
+    - '*.gemspec'
+Documentation:
+  Enabled: false
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/MessageSpies:
+  Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 80
+RSpec/MultipleExpectations:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+Metrics/AbcSize:
+  Max: 23
+Metrics/CyclomaticComplexity:
+  Max: 7
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - 'spec/**/*_spec.rb'
+Metrics/MethodLength:
+  Max: 25
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - 'lib/jsonapi_parameters/parameters.rb'
+Style/EmptyMethod:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    '%i': ()
+    '%w': ()
+Style/RaiseArgs:
+  EnforcedStyle: compact
+Style/RegexpLiteral:
+  StyleGuide: slashes
+Style/SymbolArray:
+  EnforcedStyle: brackets
+Style/StringLiterals:
+  EnforcedStyle: single_quotes

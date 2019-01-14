@@ -1,5 +1,5 @@
-# JsonApiParameters
-Short description and motivation.
+# JsonApi::Parameters
+Simple JSON:API compliant parameters translator.
 
 ## Usage
 How to use my plugin.

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+set -e
+
+bundle exec bin/audit
+bundle exec bin/quality
+bundle exec rspec spec --format documentation

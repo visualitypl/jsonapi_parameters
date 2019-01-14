@@ -1,0 +1,1 @@
+bundle audit check --update
