@@ -1,6 +1,7 @@
 require: rubocop-rspec
 
 AllCops:
+  TargetRubyVersion: 2.3.0
   DisplayCopNames: true
   Exclude:
     - '**/config.ru'
@@ -8,6 +9,8 @@ AllCops:
     - 'bin/**/*'
     - 'tmp/**/*'
     - '*.gemspec'
+    - '**/spec/spec_helper.rb'
+    - '**/spec/support/inputs_outputs_pairs.rb'
 Documentation:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:

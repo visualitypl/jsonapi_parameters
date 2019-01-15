@@ -1,8 +1,14 @@
 require 'bundler/setup'
 Bundler.setup
 
-require 'jsonapi_parameters' # and any other gems you need
+require 'jsonapi_parameters'
+Dir[
+  File.expand_path(
+    File.join(
+      File.dirname(__FILE__), 'support', '**', '*.rb'
+    )
+  )
+].each {|f| require f}
 
 RSpec.configure do |config|
-  # some (optional) config here
 end
