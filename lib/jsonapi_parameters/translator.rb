@@ -31,7 +31,7 @@ module JsonApi::Parameters
         key, val = case relationship_value
                    when Array
                      handle_to_many_relation(relationship_key, relationship_value)
-                   when Hash # to-one relationship
+                   when Hash
                      handle_to_one_relation(relationship_key, relationship_value)
                    else
                      raise jsonapi_not_implemented_err
