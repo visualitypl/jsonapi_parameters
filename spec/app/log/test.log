@@ -33,3 +33,7 @@ Processing by PongController#pong as HTML
 Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
 Processing by PongController#pong as HTML
 Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+Processing by PongController#pong as HTML
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+Processing by PongController#pong as HTML
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
