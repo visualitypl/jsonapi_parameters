@@ -1,6 +1,11 @@
 require 'bundler/setup'
 Bundler.setup
 
+ENV["RAILS_ENV"] = "test"
+
+require_relative "app/config/environment"
+ActiveRecord::Migrator.migrations_paths = [File.expand_path("app/db/migrate", __dir__)]
+
 require 'jsonapi_parameters'
 Dir[
   File.expand_path(
