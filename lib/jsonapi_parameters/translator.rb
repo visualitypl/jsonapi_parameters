@@ -22,7 +22,7 @@ module JsonApi::Parameters
   end
 
   def jsonapi_main_key
-    @jsonapi_unsafe_hash.dig(:data, :type)&.singularize
+    @jsonapi_unsafe_hash.dig(:data, :type)&.singularize || ''
   end
 
   def jsonapi_main_body

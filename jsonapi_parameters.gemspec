@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.62.0'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.31.0'
   spec.add_development_dependency 'bundler-audit', '~> 0.6.0'
+  spec.add_development_dependency 'fast_jsonapi', '~> 1.5'
 end
