@@ -28,6 +28,8 @@ module JsonApi::Parameters
   def jsonapi_main_body
     jsonapi_unsafe_params.tap do |param|
       jsonapi_relationships.each do |relationship_key, relationship_value|
+        relationship_value = relationship_value[:data]
+
         key, val = case relationship_value
                    when Array
                      handle_to_many_relation(relationship_key, relationship_value)
@@ -57,8 +59,8 @@ module JsonApi::Parameters
     key = "#{relationship_key.to_s.pluralize}_attributes".to_sym
 
     val = relationship_value.map do |relationship_value|
-      related_id = relationship_value.dig(:data, :id)
-      related_type = relationship_value.dig(:data, :type)
+      related_id = relationship_value.dig(:id)
+      related_type = relationship_value.dig(:type)
 
       included_object = find_included_object(
         related_id: related_id, related_type: related_type
@@ -73,7 +75,7 @@ module JsonApi::Parameters
   end
 
   def handle_to_one_relation(relationship_key, relationship_value)
-    related_id = relationship_value.dig(:data, :id)
+    related_id = relationship_value.dig(:id)
     related_type = relationship_key.to_s
 
     included_object = find_included_object(

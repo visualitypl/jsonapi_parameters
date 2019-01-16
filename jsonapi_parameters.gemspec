@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'fast_jsonapi', '~> 1.5'
   spec.add_development_dependency 'factory_bot', '~> 4.11.1'
   spec.add_development_dependency 'faker', '~> 1.9.1'
+  spec.add_development_dependency 'hashdiff', '~> 0.3.8'
 end
