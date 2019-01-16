@@ -94,6 +94,69 @@ module JsonApi::Parameters::Testing
           }
         }
       ]
+    ],
+    'PATCH update payloads' => [
+      'https://jsonapi.org/format/#crud example (modified, multiple photographers)' => [
+        {
+          data: {
+            type: 'photos',
+            attributes: {
+              id: 2,
+              title: 'Ember Hamster',
+              src: 'http://example.com/images/productivity.png'
+            },
+            relationships: {
+              photographers: [
+                {
+                  data: {
+                    type: 'people',
+                    id: 9
+                  }
+                },
+                {
+                  data: {
+                    type: 'people',
+                    id: 10
+                  }
+                }
+              ]
+            }
+          },
+          included: [
+            {
+              type: 'people',
+              id: 10,
+              attributes: {
+                name: 'Some guy'
+              }
+            },
+            {
+              type: 'people',
+              id: 9,
+              attributes: {
+                name: 'Some other guy'
+              }
+            }
+          ]
+        },
+        {
+          photo: {
+            id: 2,
+            title: 'Ember Hamster',
+            src: 'http://example.com/images/productivity.png',
+            photographers_attributes: [
+              {
+                id: 9,
+                name: 'Some other guy'
+              },
+              {
+                id: 10,
+                name: 'Some guy'
+              }
+            ]
+          }
+        }
+      ]
     ]
   }
 end
