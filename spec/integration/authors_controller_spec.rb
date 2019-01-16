@@ -38,14 +38,14 @@ describe AuthorsController, type: :controller do
             name: 'John Doe'
           },
           relationships: {
-            posts: [
-              {
-                data: {
-                  type: 'post',
-                  id: '123'
+            posts: {
+              data: [
+                {
+                  id: '123',
+                  type: 'post'
                 }
-              }
-            ]
+              ]
+            }
           }
         },
         included: [

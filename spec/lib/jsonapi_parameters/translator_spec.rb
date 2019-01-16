@@ -16,7 +16,8 @@ describe Translator do
             it "matches #{case_name}" do
               input, predicted_output = case_data
 
-              expect(described_class.new.jsonapify(input)).to eq(predicted_output)
+              translated_input = described_class.new.jsonapify(input)
+              expect(HashDiff.diff(translated_input, predicted_output)).to eq([])
             end
           end
         end
@@ -33,7 +34,8 @@ describe Translator do
               input, predicted_output = case_data
               input = ActionController::Parameters.new(input)
 
-              expect(described_class.new.jsonapify(input)).to eq(predicted_output)
+              translated_input = described_class.new.jsonapify(input)
+              expect(HashDiff.diff(translated_input, predicted_output)).to eq([])
             end
           end
         end

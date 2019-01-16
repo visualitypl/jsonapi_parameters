@@ -8,6 +8,7 @@ ActiveRecord::Migrator.migrations_paths = [File.expand_path("app/db/migrate", __
 
 require 'jsonapi_parameters'
 require 'factory_bot'
+require 'hashdiff'
 
 Dir[
   File.expand_path(
