@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe AuthorsController, type: :controller do
+describe AuthorsCamelController, type: :controller do
   describe 'create' do
     it 'creates an author' do
       params = {
@@ -55,7 +55,7 @@ describe AuthorsController, type: :controller do
             attributes: {
               title: 'Some title',
               body: 'Some body that I used to love',
-              category_name: 'Some category'
+              categoryName: 'Some category'
             }
           }
         ]

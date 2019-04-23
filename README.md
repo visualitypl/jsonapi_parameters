@@ -56,9 +56,13 @@ With jsonapi_parameters, the difference is just the params:
 
 ```ruby
 def create_params
-  params.to_jsonapi.require(:model).permit(:name)
+  params.from_jsonapi.require(:model).permit(:name)
 end
-```    
+```
+
+#### Casing
+
+If the input is in a different convention than `:snake_case`, you should specify that while calling `.from_jsonapi`, for instance: `.from_jsonapi(:camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
 
 ### Plain Ruby / outside Rails
 
@@ -75,6 +79,10 @@ translator = Translator.new
 
 translator.jsonapify(params)
 ```
+
+#### Casing
+
+If the input is in a different convention than `:snake_case`, you should specify that while calling `.jsonapify`, for instance: `.jsonapify(params, naming_convention: :camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

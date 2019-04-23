@@ -1,16 +1,20 @@
 module JsonApi::Parameters
-  def jsonapify(params)
-    jsonapi_translate(params)
+  def jsonapify(params, naming_convention: :snake)
+    jsonapi_translate(params, naming_convention: naming_convention)
   end
 
   private
 
-  def jsonapi_translate(params)
+  def jsonapi_translate(params, naming_convention:)
     params = params.to_unsafe_h if params.is_a?(ActionController::Parameters)
 
     return params if params.nil? || params.empty?
 
-    @jsonapi_unsafe_hash = params.deep_symbolize_keys
+    @jsonapi_unsafe_hash = if naming_convention != :underscore
+                             params.deep_transform_keys { |key| key.to_s.underscore.to_sym }
+                           else
+                             params.deep_symbolize_keys
+                           end
 
     formed_parameters
   end
