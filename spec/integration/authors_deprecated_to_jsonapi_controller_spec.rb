@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe AuthorsController, type: :controller do
+describe AuthorsDeprecatedToJsonapiController, type: :controller do
   describe 'create' do
     it 'creates an author' do
       params = {

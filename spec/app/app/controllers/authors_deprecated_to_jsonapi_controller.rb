@@ -1,4 +1,4 @@
-class AuthorsController < ApplicationController
+class AuthorsDeprecatedToJsonapiController < ApplicationController
   def create
     author = Author.new(author_params)
 
@@ -12,7 +12,7 @@ class AuthorsController < ApplicationController
   private
 
   def author_params
-    params.from_jsonapi.require(:author).permit(
+    params.to_jsonapi.require(:author).permit(
       :name, posts_attributes: [:title, :body, :category_name]
     )
   end
