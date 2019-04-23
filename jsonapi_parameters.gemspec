@@ -5,8 +5,8 @@ require 'jsonapi_parameters'
 Gem::Specification.new do |spec|
   spec.name        = 'jsonapi_parameters'
   spec.version     = JsonApi::Parameters::VERSION
-  spec.authors     = ['marahin']
-  spec.email       = ['me@marahin.pl']
+  spec.authors     = ['Visuality', 'marahin']
+  spec.email       = ['contact@visuality.pl', 'me@marahin.pl']
   spec.homepage    = 'https://github.com/visualitypl/jsonapi_parameters'
   spec.summary     = 'Translator for JSON:API compliant parameters'
   spec.description = 'JsonApi::Parameters allows you to easily translate JSON:API compliant parameters to a structure expected by Rails.'
