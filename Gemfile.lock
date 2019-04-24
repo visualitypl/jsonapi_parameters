@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     jsonapi_parameters (0.1.0)
+      actionpack (>= 4.1.8)
       activesupport (>= 4.1.8)
 
 GEM
