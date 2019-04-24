@@ -1,6 +1,8 @@
 # JsonApi::Parameters
 Simple JSON:API compliant parameters translator.
 
+[![Gem Version](https://badge.fury.io/rb/jsonapi_parameters.svg)](https://badge.fury.io/rb/jsonapi_parameters)
+
 #### The problem
 
 JSON:API standard specifies not only responses (that can be handled nicely, using gems like [fast_jsonapi from Netflix](https://github.com/Netflix/fast_jsonapi)), but also the request structure. 
