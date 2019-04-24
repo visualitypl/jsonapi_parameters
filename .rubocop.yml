@@ -12,6 +12,8 @@ AllCops:
     - '**/spec/spec_helper.rb'
     - '**/spec/support/inputs_outputs_pairs.rb'
     - '**/spec/app/**/*'
+    - 'gemfiles/**/*'
+    - 'Appraisals'
 Documentation:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
@@ -44,9 +46,7 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 25
 Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-  Exclude:
-    - 'lib/jsonapi_parameters/parameters.rb'
+  Enabled: false
 Style/EmptyMethod:
   Enabled: false
 Style/FrozenStringLiteralComment:

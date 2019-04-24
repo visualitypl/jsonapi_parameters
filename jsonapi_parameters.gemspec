@@ -1,6 +1,6 @@
 $:.push File.expand_path('lib', __dir__)
 
-require 'jsonapi_parameters'
+require 'jsonapi_parameters/version'
 
 Gem::Specification.new do |spec|
   spec.name        = 'jsonapi_parameters'
@@ -15,10 +15,11 @@ Gem::Specification.new do |spec|
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   spec.required_ruby_version = '>= 2.3.0'
 
-  spec.add_dependency 'activesupport', '>= 4.1.8'
-  spec.add_dependency 'actionpack', '>= 4.1.8'
+  spec.add_runtime_dependency 'activesupport', '>= 4.1.8'
+  spec.add_runtime_dependency 'actionpack', '>= 4.1.8'
 
   spec.add_development_dependency 'json', '~> 2.0'
+  spec.add_development_dependency 'appraisal', '~> 2.2.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3.13'
   spec.add_development_dependency 'database_cleaner', '~> 1.7.0'
   spec.add_development_dependency 'rails', '>= 4.1.8'
