@@ -28,6 +28,8 @@ RSpec/ExampleLength:
   Max: 80
 RSpec/MultipleExpectations:
   Enabled: false
+RSpec/NestedGroups:
+  Enabled: false
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
@@ -36,7 +38,7 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Max: 7
 Metrics/LineLength:
-  Max: 100
+  Max: 150
   Exclude:
     - 'spec/**/*_spec.rb'
 Metrics/MethodLength:

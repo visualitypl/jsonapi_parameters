@@ -62,7 +62,18 @@ end
 
 #### Casing
 
-If the input is in a different convention than `:snake`, you should specify that while calling `.from_jsonapi`, for instance: `.from_jsonapi(:camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
+If the input is in a different convention than `:snake`, you should specify that.
+ 
+ You can do it in two ways: 
+ * in an initializer, simply create `initializers/jsonapi_parameters.rb` with contents similar to: 
+ ```ruby
+ # config/initializers/jsonapi_parameters.rb
+  
+  JsonApi::Parameters.ensure_underscore_translation = true
+ 
+ ```
+ 
+ * while calling `.from_jsonapi`, for instance: `.from_jsonapi(:camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
 
 ### Plain Ruby / outside Rails
 
@@ -82,7 +93,12 @@ translator.jsonapify(params)
 
 #### Casing
 
-If the input is in a different convention than `:snake`, you should specify that while calling `.jsonapify`, for instance: `.jsonapify(params, naming_convention: :camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
+If the input is in a different convention than `:snake`, you should specify that.
+ 
+ You can do it in two ways:
+ 
+ * by a global setting: `JsonApi::Parameters.ensure_underscore_translation = true` 
+ * while calling `.jsonapify`, for instance: `.jsonapify(params, naming_convention: :camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

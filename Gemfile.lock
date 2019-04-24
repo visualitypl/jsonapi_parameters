@@ -72,6 +72,7 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
+    json (2.2.0)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -182,6 +183,7 @@ DEPENDENCIES
   faker (~> 1.9.1)
   fast_jsonapi (~> 1.5)
   hashdiff (~> 0.3.8)
+  json (~> 2.0)
   jsonapi_parameters!
   pry (~> 0.12.2)
   rails (>= 4.1.8)
