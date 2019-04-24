@@ -99,6 +99,12 @@ If the input is in a different convention than `:snake`, you should specify that
  
  * by a global setting: `JsonApi::Parameters.ensure_underscore_translation = true` 
  * while calling `.jsonapify`, for instance: `.jsonapify(params, naming_convention: :camel)`. **The value does not really matter, as anything different than `:snake` will result in deep keys transformation provided by [ActiveSupport](https://apidock.com/rails/v4.1.8/Hash/deep_transform_keys).**
+ 
+## Mime Type
+
+As [stated in the JSON:API specification](https://jsonapi.org/#mime-types) correct mime type for JSON:API input should be [`application/vnd.api+json`](http://www.iana.org/assignments/media-types/application/vnd.api+json). 
+
+This gems intention is to make input consumption as easy as possible. Hence, it [registers this mime type for you](lib/jsonapi_parameters/core_ext/action_dispatch/http/mime_type.rb). 
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
