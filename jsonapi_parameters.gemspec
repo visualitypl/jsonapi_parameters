@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'actionpack', '>= 4.1.8'
 
   spec.add_development_dependency 'json', '~> 2.0'
-  spec.add_development_dependency 'appraisal', '~> 2.2.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3.13'
   spec.add_development_dependency 'database_cleaner', '~> 1.7.0'
   spec.add_development_dependency 'rails', '>= 4.1.8'
@@ -33,4 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'factory_bot', '~> 4.11.1'
   spec.add_development_dependency 'faker', '~> 1.9.1'
   spec.add_development_dependency 'hashdiff', '~> 0.3.8'
+  spec.add_development_dependency 'simplecov', '~> 0.16.1'
+  spec.add_development_dependency 'simplecov-console', '~> 0.4.2'
 end

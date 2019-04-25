@@ -49,10 +49,7 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    appraisal (2.2.0)
-      bundler
-      rake
-      thor (>= 0.14.0)
+    ansi (1.5.0)
     arel (9.0.0)
     ast (2.4.0)
     builder (3.2.3)
@@ -64,6 +61,7 @@ GEM
     crass (1.0.4)
     database_cleaner (1.7.0)
     diff-lcs (1.3)
+    docile (1.3.1)
     erubi (1.8.0)
     factory_bot (4.11.1)
       activesupport (>= 3.0.0)
@@ -74,6 +72,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (0.3.9)
+    hirb (0.7.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
@@ -161,6 +160,15 @@ GEM
     rubocop-rspec (1.31.0)
       rubocop (>= 0.60.0)
     ruby-progressbar (1.10.0)
+    simplecov (0.16.1)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-console (0.4.2)
+      ansi
+      hirb
+      simplecov
+    simplecov-html (0.10.2)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -182,7 +190,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  appraisal (~> 2.2.0)
   bundler-audit (~> 0.6.0)
   database_cleaner (~> 1.7.0)
   factory_bot (~> 4.11.1)
@@ -197,6 +204,8 @@ DEPENDENCIES
   rspec-rails (~> 3.8.1)
   rubocop (~> 0.62.0)
   rubocop-rspec (~> 1.31.0)
+  simplecov (~> 0.16.1)
+  simplecov-console (~> 0.4.2)
   sqlite3 (~> 1.3.13)
 
 BUNDLED WITH

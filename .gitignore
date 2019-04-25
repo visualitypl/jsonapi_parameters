@@ -18,3 +18,5 @@ spec/app/.rakeTasks
 
 .idea
 jsonapi_parameters.iml
+
+coverage

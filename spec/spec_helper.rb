@@ -1,6 +1,12 @@
 require 'bundler/setup'
 Bundler.setup
 
+require 'simplecov'
+require 'simplecov-console'
+SimpleCov.start do
+  add_filter "spec/app/"
+end
+
 ENV["RAILS_ENV"] = "test"
 
 require_relative "app/config/environment"
