@@ -13,7 +13,7 @@ AllCops:
     - '**/spec/support/inputs_outputs_pairs.rb'
     - '**/spec/app/**/*'
     - 'gemfiles/**/*'
-    - 'Appraisals'
+    - 'vendor/**/*'
 Documentation:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
