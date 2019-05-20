@@ -38,7 +38,9 @@ Metrics/BlockLength:
 Metrics/AbcSize:
   Max: 23
 Metrics/CyclomaticComplexity:
-  Max: 7
+  Max: 8
+Metrics/PerceivedComplexity:
+  Max: 8
 Metrics/LineLength:
   Max: 150
   Exclude:

@@ -60,9 +60,9 @@ module JsonApi::Parameters
   end
 
   def handle_to_many_relation(relationship_key, relationship_value)
-    key = "#{relationship_key.to_s.pluralize}_attributes".to_sym
+    with_inclusion = true
 
-    val = relationship_value.map do |relationship_value|
+    vals = relationship_value.map do |relationship_value|
       related_id = relationship_value.dig(:id)
       related_type = relationship_value.dig(:type)
 
@@ -70,12 +70,31 @@ module JsonApi::Parameters
         related_id: related_id, related_type: related_type
       ) || {}
 
-      included_object.delete(:type)
+      # If at least one related object has not been found in `included` tree,
+      # we should not attempt to "#{relationship_key}_attributes" but
+      # "#{relationship_key}_ids" instead.
+      with_inclusion = with_inclusion ? !included_object.empty? : with_inclusion
 
-      included_object[:attributes].merge(id: related_id)
+      if with_inclusion
+        included_object.delete(:type)
+        included_object[:attributes].merge(id: related_id)
+      else
+        relationship_value.dig(:id)
+      end
     end
 
-    [key, val]
+    # We may have smells in our value array as `with_inclusion` may have been changed at some point
+    # but not in the beginning.
+    # Because of that we should clear it and make sure the results are unified (e.g. array of ids)
+    unless with_inclusion
+      vals.map do |val|
+        val.dig(:attributes, :id) if val.is_a?(Hash)
+      end
+    end
+
+    key = with_inclusion ? "#{relationship_key}_attributes".to_sym : "#{relationship_key}_ids".to_sym
+
+    [key, vals]
   end
 
   def handle_to_one_relation(relationship_key, relationship_value)
