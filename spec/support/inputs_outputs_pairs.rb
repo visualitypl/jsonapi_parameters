@@ -216,7 +216,7 @@ module JsonApi::Parameters::Testing
             storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
             budget: 6400000,
             director_id: 682,
-            genres_ids: [74]
+            genre_ids: [74]
           }
         }
       ]

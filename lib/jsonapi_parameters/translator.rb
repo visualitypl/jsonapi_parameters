@@ -1,4 +1,6 @@
 module JsonApi::Parameters
+  include ActiveSupport::Inflector
+
   def jsonapify(params, naming_convention: :snake)
     jsonapi_translate(params, naming_convention: naming_convention)
   end
@@ -92,7 +94,7 @@ module JsonApi::Parameters
       end
     end
 
-    key = with_inclusion ? "#{relationship_key}_attributes".to_sym : "#{relationship_key}_ids".to_sym
+    key = with_inclusion ? "#{pluralize(relationship_key)}_attributes".to_sym : "#{singularize(relationship_key)}_ids".to_sym
 
     [key, vals]
   end
