@@ -219,6 +219,56 @@ module JsonApi::Parameters::Testing
             genre_ids: [74]
           }
         }
+      ],
+      'relationships with included director (issue #13 - https://github.com/visualitypl/jsonapi_parameters/issues/13)' => [
+        {
+          data: {
+            type: 'movies',
+            attributes: {
+              title: 'The Terminator',
+              released_at: '1984-10-26',
+              runtime: 107,
+              content_rating: 'restricted',
+              storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
+              budget: 6400000
+            },
+            relationships: {
+              genres: {
+                data: [
+                  {
+                    id: 74, type: 'genres'
+                  }
+                ]
+              },
+              director: {
+                data: {
+                  id: 682, type: 'directors'
+                }
+              }
+            }
+          },
+          included: [
+            {
+              type: 'directors',
+              id: 682,
+              attributes: {
+                name: 'Some guy'
+              }
+            }
+          ]
+        },
+        {
+          movie: {
+            title: 'The Terminator',
+            released_at: '1984-10-26',
+            runtime: 107,
+            content_rating: 'restricted',
+            storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
+            budget: 6400000,
+            director_attributes: { id: 682, name: 'Some guy' },
+            genre_ids: [74]
+          }
+        }
       ]
     ],
     'PATCH update payloads' => [

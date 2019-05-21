@@ -101,16 +101,17 @@ module JsonApi::Parameters
 
   def handle_to_one_relation(relationship_key, relationship_value)
     related_id = relationship_value.dig(:id)
-    related_type = relationship_key.to_s
+    related_type = relationship_value.dig(:type)
 
     included_object = find_included_object(
       related_id: related_id, related_type: related_type
-    )
+    ) || {}
 
-    return ["#{related_type.singularize}_id".to_sym, related_id] if included_object.nil?
+    return ["#{singularize(relationship_key)}_id".to_sym, related_id] if included_object.empty?
 
     included_object.delete(:type)
-    ["#{related_type.singularize}_attributes".to_sym, included_object]
+    included_object = included_object[:attributes].merge(id: related_id)
+    ["#{singularize(relationship_key)}_attributes".to_sym, included_object]
   end
 
   def find_included_object(related_id:, related_type:)
