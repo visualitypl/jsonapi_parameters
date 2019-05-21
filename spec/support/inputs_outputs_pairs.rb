@@ -11,58 +11,58 @@ module JsonApi::Parameters::Testing
       ],
       'single root, single relationship, multiple related resources' => [
         {
-          :data => {
-            :type => "contract",
-            :attributes => {
-              :total_amount => "40.0",
-              :start_date => "2018-10-18"
+          data: {
+            type: "contract",
+            attributes: {
+              total_amount: "40.0",
+              start_date: "2018-10-18"
             },
-            :relationships => {
-              :products => {
-                :data => [
+            relationships: {
+              products: {
+                data: [
                   {
-                    :id => "4", :type => "product"
+                    id: "4", type: "product"
                   }, {
-                    :id => "5", :type => "product"
+                    id: "5", type: "product"
                   }, {
-                    :id => "6", :type => "product"
+                    id: "6", type: "product"
                   }
                 ]
               },
-              :customer => {
-                :data => {
-                  :id => "1", :type => "customer"
+              customer: {
+                data: {
+                  id: "1", type: "customer"
                 }
               }
             }
           },
-          :included => [
+          included: [
             {
-              :id => "4",
-              :type => "product",
-              :attributes => {
-                :category => "first_category",
-                :amount => "15.0",
-                :name => "First product",
-                :note => ""
+              id: "4",
+              type: "product",
+              attributes: {
+                category: "first_category",
+                amount: "15.0",
+                name: "First product",
+                note: ""
               }
             },
             {
-              :id => "5",
-              :type => "product",
-              :attributes => {
-                :category => "first_category",
-                :amount => "10.0",
-                :name => "Second Product",
+              id: "5",
+              type: "product",
+              attributes: {
+                category: "first_category",
+                amount: "10.0",
+                name: "Second Product",
               }
             },
             {
-              :id => "6",
-              :type => "product",
-              :attributes => {
-                :category => "second_category",
-                :amount => "15.0",
-                :name => "Third Product",
+              id: "6",
+              type: "product",
+              attributes: {
+                category: "second_category",
+                amount: "15.0",
+                name: "Third Product",
               }
             }
           ]
@@ -75,22 +75,22 @@ module JsonApi::Parameters::Testing
             products_attributes: [
               {
                 id: '4',
-                :category => "first_category",
-                :amount => "15.0",
-                :name => "First product",
+                category: "first_category",
+                amount: "15.0",
+                name: "First product",
                 note: ''
               },
               {
                 id: '5',
-                :category => "first_category",
-                :amount => "10.0",
-                :name => "Second Product"
+                category: "first_category",
+                amount: "10.0",
+                name: "Second Product"
               },
               {
                 id: '6',
-                :category => "second_category",
-                :amount => "15.0",
-                :name => "Third Product"
+                category: "second_category",
+                amount: "15.0",
+                name: "Third Product"
               }
             ]
           }
@@ -182,29 +182,29 @@ module JsonApi::Parameters::Testing
       'relationships without included (issue #13 - https://github.com/visualitypl/jsonapi_parameters/issues/13)' => [
         {
           data: {
-              type: 'movies',
-              attributes: {
-                title: 'The Terminator',
-                released_at: '1984-10-26',
-                runtime: 107,
-                content_rating: 'restricted',
-                storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
-                budget: 6400000
-              },
-              relationships: {
-                genres: {
-                  data: [
-                    {
-                      id: 74, type: 'genres'
-                    }
-                  ]
-                },
-                director: {
-                  data: {
-                    id: 682, type: 'directors'
+            type: 'movies',
+            attributes: {
+              title: 'The Terminator',
+              released_at: '1984-10-26',
+              runtime: 107,
+              content_rating: 'restricted',
+              storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
+              budget: 6400000
+            },
+            relationships: {
+              genres: {
+                data: [
+                  {
+                    id: 74, type: 'genres'
                   }
+                ]
+              },
+              director: {
+                data: {
+                  id: 682, type: 'directors'
                 }
               }
+            }
             }
         },
         {
