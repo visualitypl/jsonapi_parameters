@@ -64,6 +64,209 @@ def create_params
 end
 ```
 
+#### Relationships
+
+JsonApi::Parameters supports ActiveRecord relationship parameters, including [nested attributes](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html).
+
+Relationship parameters are being read from two optional trees:  
+
+* `relationships`,
+* `included`
+
+If you provide any related resources in the `relationships` table, this gem will also look for corresponding, `included` resources and their attributes. Thanks to that this gem supports nested attributes, and will try to translate these included resources and pass them along.
+
+##### belongs_to
+
+Passing a resource that is a single entity in relationships tree will make JsonApi::Parameters assume that it is a `belongs_to` relationship. 
+
+###### Without included entity
+Example:
+
+```
+class Movie < ActiveRecord::Model
+    belongs_to :director
+end
+```
+
+Request body:
+
+```
+{
+    data: {
+        type: 'movies',
+        attributes: {
+          title: 'The Terminator',
+        },
+        relationships: {
+          director: {
+            data: {
+              id: 682, type: 'directors'
+            }
+          }
+        }
+    }
+}
+```
+
+Will translate to:
+
+```
+{
+  movie: {
+    title: 'The Terminator',
+    director_id: 682
+  }
+}
+```
+
+
+###### With included entity:
+Example:
+
+```
+class Movie < ActiveRecord::Model
+    belongs_to :director
+    
+    accepts_nested_attributes_for :director
+end
+```
+
+Request body:
+```
+{
+    data: {
+        type: 'movies',
+        attributes: {
+          title: 'The Terminator',
+        },
+        relationships: {
+          director: {
+            data: {
+              id: 682, type: 'directors'
+            }
+          }
+        }
+    },
+    included: [
+        {
+            type: 'directors',
+            id: 682,
+            attributes: { 
+                name: 'Some guy'
+            }
+        }
+    ]
+}
+```
+
+Will translate to:   
+```
+{
+  movie: {
+    title: 'The Terminator',
+    director_attributes: { id: 682, name: 'Some guy' }
+  }
+}
+```
+
+##### has_many
+
+Passing a resource that is a an array of entities in relationships tree will make JsonApi::Parameters assume that it is a `has_many` relationship. 
+
+###### Without included entity
+Example:
+
+```
+class Movie < ActiveRecord::Model
+    has_many :genres
+end
+```
+
+Request body:
+
+```
+{
+    data: {
+        type: 'movies',
+        attributes: {
+          title: 'The Terminator',
+        },
+        relationships: {
+          genres: [{
+            data: {
+              id: 1, type: 'genres'
+            },
+            data: {
+              id: 2, type: 'genres'
+            },
+          }]
+        }
+    }
+}
+```
+
+Will translate to:
+
+```
+{
+  movie: {
+    title: 'The Terminator',
+    genre_ids: [1, 2]
+  }
+}
+```
+
+
+###### With included entity:
+Example:
+
+```
+class Movie < ActiveRecord::Model
+    has_many :genres
+    
+    accepts_nested_attributes_for :genres
+end
+```
+
+Request body:
+```
+{
+    data: {
+        type: 'movies',
+        attributes: {
+          title: 'The Terminator',
+        },
+        relationships: {
+          genres: [{
+            data: {
+              id: 1, type: 'genres'
+            }
+          }]
+        }
+    },
+    included: [
+        {
+            type: 'genre',
+            id: 1,
+            attributes: { 
+                name: 'Genre one'
+            }
+        }
+    ]
+}
+```
+
+Will translate to:   
+```
+{
+  movie: {
+    title: 'The Terminator',
+    genres_attributes: [{ id: 1, name: 'Genre one' }]
+  }
+}
+```
+
+
 #### Casing
 
 If the input is in a different convention than `:snake`, you should specify that.
