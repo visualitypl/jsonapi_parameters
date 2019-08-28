@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'nokogiri', '~> 1.10.4'
 
   spec.add_development_dependency 'json', '~> 2.0'
-  spec.add_development_dependency 'sqlite3', '~> 1.3.13'
+  spec.add_development_dependency 'sqlite3', '~> 1.4'
   spec.add_development_dependency 'database_cleaner', '~> 1.7.0'
   spec.add_development_dependency 'rails', '>= 4.1.8'
   spec.add_development_dependency 'rspec', '~> 3.8.0'
