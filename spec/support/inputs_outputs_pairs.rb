@@ -329,7 +329,7 @@ module JsonApi::Parameters::Testing
             }
           }
         ],
-        'https://jsonapi.org/format/#crud-updating-to-many-relationships example (removal, all photographers' => [
+        'https://jsonapi.org/format/#crud-updating-to-many-relationships example (removal, all photographers)' => [
           {
             data: {
               type: 'photos',
@@ -352,7 +352,7 @@ module JsonApi::Parameters::Testing
             }
           }
         ],
-        'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single author)' => [
+        'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single owner)' => [
           {
             data: {
               type: 'account',

@@ -41,11 +41,7 @@ module JsonApi::Parameters
                    when Hash
                      handle_to_one_relation(relationship_key, relationship_value)
                    when nil
-                     # Raise error if nil on to-many association.
-                     raise jsonapi_not_implemented_err if pluralize(relationship_key).to_sym == relationship_key
-
-                     # Handle with default hash.
-                     handle_to_one_relation(relationship_key, {})
+                     handle_nil_relation(relationship_key)
                    else
                      raise jsonapi_not_implemented_err
                    end
@@ -117,6 +113,14 @@ module JsonApi::Parameters
     included_object.delete(:type)
     included_object = included_object[:attributes].merge(id: related_id)
     ["#{singularize(relationship_key)}_attributes".to_sym, included_object]
+  end
+
+  def handle_nil_relation(relationship_key)
+    # Graceful fail if nil on to-many association.
+    raise jsonapi_not_implemented_err if pluralize(relationship_key).to_sym == relationship_key
+
+    # Handle with empty hash.
+    handle_to_one_relation(relationship_key, {})
   end
 
   def find_included_object(related_id:, related_type:)
