@@ -41,6 +41,10 @@ module JsonApi::Parameters
                    when Hash
                      handle_to_one_relation(relationship_key, relationship_value)
                    when nil
+                     # Raise error if nil on to-many association.
+                     raise jsonapi_not_implemented_err if pluralize(relationship_key).to_sym == relationship_key
+
+                     # Handle with default hash.
                      handle_to_one_relation(relationship_key, {})
                    else
                      raise jsonapi_not_implemented_err
