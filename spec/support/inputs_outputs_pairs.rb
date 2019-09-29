@@ -339,7 +339,7 @@ module JsonApi::Parameters::Testing
               },
               relationships: {
                 owner: {
-                  data: { }
+                  data: nil
                 }
               }
             }
