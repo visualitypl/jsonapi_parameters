@@ -328,6 +328,29 @@ module JsonApi::Parameters::Testing
               ]
             }
           }
+        ],
+        'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single author)' => [
+          {
+            data: {
+              type: 'account',
+              attributes: {
+                name: 'Bob Loblaw',
+                profile_url: 'http://example.com/images/no-nonsense.png'
+              },
+              relationships: {
+                owner: {
+                  data: { }
+                }
+              }
+            }
+          },
+          {
+            account: {
+              name: 'Bob Loblaw',
+              profile_url: 'http://example.com/images/no-nonsense.png',
+              owner_id: nil
+            }
+          }
         ]
       ]
   }
