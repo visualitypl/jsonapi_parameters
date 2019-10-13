@@ -50,9 +50,11 @@ module JsonApi::Parameters
   end
 
   def jsonapi_unsafe_params
-    id = @jsonapi_unsafe_hash.dig(:data, :id) || nil
-    @jsonapi_unsafe_params ||= @jsonapi_unsafe_hash.dig(:data, :attributes) || {}
-    id ? @jsonapi_unsafe_params.merge(id: id) : @jsonapi_unsafe_params
+    
+    @jsonapi_unsafe_params ||= @jsonapi_unsafe_hash
+                               .dig(:data, :attributes)
+                               .merge(id: @jsonapi_unsafe_hash.dig(:data, :id))
+                               .compact || {}
   end
 
   def jsonapi_included
