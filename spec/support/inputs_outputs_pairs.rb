@@ -5,6 +5,10 @@ module JsonApi::Parameters::Testing
         { data: { type: 'tests', attributes: { name: 'test name' } } },
         { test: { name: 'test name' } }
       ],
+      'single root, client generated id' => [
+        { data: { id: 22, type: 'tests', attributes: { name: 'test name' } } },
+        { test: { id: 22, name: 'test name' } }
+      ],
       'single root, multiple attributes' => [
         { data: { type: 'tests', attributes: { name: 'test name', age: 21 } } },
         { test: { name: 'test name', age: 21 } }
