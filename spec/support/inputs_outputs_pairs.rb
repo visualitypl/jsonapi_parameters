@@ -328,6 +328,52 @@ module JsonApi::Parameters::Testing
               ]
             }
           }
+        ],
+        'https://jsonapi.org/format/#crud-updating-to-many-relationships example (removal, all photographers)' => [
+          {
+            data: {
+              type: 'photos',
+              attributes: {
+                title: 'Ember Hamster',
+                src: 'http://example.com/images/productivity.png'
+              },
+              relationships: {
+                photographers: {
+                  data: []
+                }
+              }
+            }
+          },
+          {
+            photo: {
+              title: 'Ember Hamster',
+              src: 'http://example.com/images/productivity.png',
+              photographers_attributes: []
+            }
+          }
+        ],
+        'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single owner)' => [
+          {
+            data: {
+              type: 'account',
+              attributes: {
+                name: 'Bob Loblaw',
+                profile_url: 'http://example.com/images/no-nonsense.png'
+              },
+              relationships: {
+                owner: {
+                  data: nil
+                }
+              }
+            }
+          },
+          {
+            account: {
+              name: 'Bob Loblaw',
+              profile_url: 'http://example.com/images/no-nonsense.png',
+              owner_id: nil
+            }
+          }
         ]
       ]
   }
