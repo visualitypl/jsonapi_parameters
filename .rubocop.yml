@@ -45,6 +45,8 @@ Metrics/LineLength:
   Max: 150
   Exclude:
     - 'spec/**/*_spec.rb'
+Metrics/ModuleLength:
+  Max: 120
 Metrics/MethodLength:
   Max: 25
 Style/ClassAndModuleChildren:
