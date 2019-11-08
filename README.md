@@ -192,14 +192,14 @@ Request body:
           title: 'The Terminator',
         },
         relationships: {
-          genres: [{
-            data: {
+          genres: {
+            data: [{
               id: 1, type: 'genres'
             },
-            data: {
+            {
               id: 2, type: 'genres'
-            },
-          }]
+            }]
+          }
         }
     }
 }
