@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 module JsonApi::Parameters
   include ActiveSupport::Inflector
 
