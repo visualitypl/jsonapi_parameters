@@ -231,28 +231,28 @@ end
 Request body:
 ```
 {
-    data: {
-        type: 'movies',
-        attributes: {
-          title: 'The Terminator',
-        },
-        relationships: {
-          genres: [{
-            data: {
-              id: 1, type: 'genres'
-            }
-          }]
-        }
+  data: {
+    type: 'movies',
+    attributes: {
+      title: 'The Terminator',
     },
-    included: [
-        {
-            type: 'genre',
-            id: 1,
-            attributes: { 
-                name: 'Genre one'
-            }
-        }
-    ]
+    relationships: {
+      genres: {
+        data: [{
+                 id: 1, type: 'genres'
+               }]
+      }
+    }
+  },
+  included: [
+    {
+      type: 'genres',
+      id: 1,
+      attributes: {
+        name: 'Genre one'
+      }
+    }
+  ]
 }
 ```
 
