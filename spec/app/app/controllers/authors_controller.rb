@@ -9,11 +9,21 @@ class AuthorsController < ApplicationController
     end
   end
 
+  def update
+    author = Author.find(params[:id])
+
+    if author.update(author_params)
+      render json: AuthorSerializer.new(author).serializable_hash, status: :ok
+    else
+      head 500
+    end
+  end
+
   private
 
   def author_params
     params.from_jsonapi.require(:author).permit(
-      :name, posts_attributes: [:title, :body, :category_name]
+      :name, posts_attributes: [:title, :body, :category_name], post_ids: []
     )
   end
 end
