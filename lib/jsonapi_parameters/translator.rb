@@ -79,10 +79,10 @@ module JsonApi::Parameters
         related_id: related_id, related_type: related_type
       ) || {}
 
-      # If at least one related object has been found in `included` tree,
-      # we should attempt to return "#{relationship_key}_attributes".
-      # If there is no included records, we should pass "#{relationship_key}_ids" instead.
-      with_inclusion = with_inclusion ? !included_object.empty? : with_inclusion
+      # If at least one related object has not been found in `included` tree,
+      # we should not attempt to "#{relationship_key}_attributes" but
+      # "#{relationship_key}_ids" instead.
+      with_inclusion &= !included_object.empty?
 
       if with_inclusion
         included_object.delete(:type)
