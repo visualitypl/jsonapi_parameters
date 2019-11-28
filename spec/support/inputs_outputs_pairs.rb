@@ -352,7 +352,7 @@ module JsonApi::Parameters::Testing
             photo: {
               title: 'Ember Hamster',
               src: 'http://example.com/images/productivity.png',
-              photographers_attributes: []
+              photographer_ids: []
             }
           }
         ],
@@ -378,7 +378,48 @@ module JsonApi::Parameters::Testing
               owner_id: nil
             }
           }
+        ],
+        'https://github.com/pstrzalk case of emptying has_many relationship (w/ empty included)' => [
+          {
+            data: {
+              type: 'users',
+              attributes: {
+                name: 'Adam Joe'
+              },
+              relationships: {
+                practice_areas: {
+                  data: []
+                }
+              },
+              included: []
+            }
+          },
+          {
+            user: {
+              name: 'Adam Joe', practice_area_ids: [],
+            }
+          }
+        ],
+        'https://github.com/pstrzalk case of emptying has_many relationship (w/o included)' => [
+          {
+            data: {
+              type: 'users',
+              attributes: {
+                name: 'Adam Joe'
+              },
+              relationships: {
+                practice_areas: {
+                  data: []
+                }
+              }
+            }
+          },
+          {
+            user: {
+              name: 'Adam Joe', practice_area_ids: [],
+            }
+          }
         ]
-      ]
+    ]
   }
 end

@@ -69,11 +69,11 @@ module JsonApi::Parameters
   end
 
   def handle_to_many_relation(relationship_key, relationship_value)
-    with_inclusion = true
+    with_inclusion = !relationship_value.empty?
 
-    vals = relationship_value.map do |relationship_value|
-      related_id = relationship_value.dig(:id)
-      related_type = relationship_value.dig(:type)
+    vals = relationship_value.map do |relationship|
+      related_id = relationship.dig(:id)
+      related_type = relationship.dig(:type)
 
       included_object = find_included_object(
         related_id: related_id, related_type: related_type
@@ -82,13 +82,13 @@ module JsonApi::Parameters
       # If at least one related object has not been found in `included` tree,
       # we should not attempt to "#{relationship_key}_attributes" but
       # "#{relationship_key}_ids" instead.
-      with_inclusion = with_inclusion ? !included_object.empty? : with_inclusion
+      with_inclusion &= !included_object.empty?
 
       if with_inclusion
         included_object.delete(:type)
         included_object[:attributes].merge(id: related_id)
       else
-        relationship_value.dig(:id)
+        relationship.dig(:id)
       end
     end
 
