@@ -26,6 +26,8 @@ RSpec/MessageSpies:
   Enabled: false
 RSpec/ContextWording:
   Enabled: false
+RSpec/MultipleDescribes:
+  Enabled: false
 RSpec/ExampleLength:
   Max: 80
 RSpec/MultipleExpectations:
@@ -36,7 +38,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
 Metrics/AbcSize:
-  Max: 23
+  Max: 25
 Metrics/CyclomaticComplexity:
   Max: 8
 Metrics/PerceivedComplexity:
