@@ -13,7 +13,7 @@ module JsonApi
             # we have to assume that it is a to-many relationship.
             if pluralize(relationship_key).to_sym == relationship_key
               raise NotImplementedError.new(
-                'relationship member must either be an Array or a Hash'
+                'plural resource cannot be nullified - please create a custom handler for this relation'
               )
             end
 

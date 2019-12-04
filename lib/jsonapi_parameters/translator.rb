@@ -49,7 +49,7 @@ module JsonApi::Parameters
                     when nil
                       Handlers.handlers[:nil]
                     else
-                      raise NotImplementedError.new('relationship member must either be an Array or a Hash')
+                      raise NotImplementedError.new('relationship resource linkage has to be a type of Array, Hash or nil')
                     end
                   end
 

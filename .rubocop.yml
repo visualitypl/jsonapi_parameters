@@ -70,3 +70,5 @@ Style/SymbolArray:
   EnforcedStyle: brackets
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+RSpec/HookArgument:
+  Enabled: false

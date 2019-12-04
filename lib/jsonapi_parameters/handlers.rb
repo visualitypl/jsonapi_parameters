@@ -7,6 +7,12 @@ module JsonApi
     module Handlers
       include DefaultHandlers
 
+      DEFAULT_HANDLER_SET = {
+        to_many: ->(k, v, included) { ToManyRelationHandler.new(k, v, included).handle },
+        to_one: ->(k, v, included) { ToOneRelationHandler.new(k, v, included).handle },
+        nil: ->(k, v, included) { NilRelationHandler.new(k, v, included).handle }
+      }.freeze
+
       module_function
 
       def add_handler(handler_name, klass)
@@ -23,16 +29,17 @@ module JsonApi
         resource_handlers[resource_key.to_sym] = handler_key.to_sym
       end
 
+      def reset_handlers!
+        @handlers = {}.merge(DEFAULT_HANDLER_SET)
+        @resource_handlers = {}
+      end
+
       def resource_handlers
         @resource_handlers ||= {}
       end
 
       def handlers
-        @handlers ||= {
-          to_many: ->(k, v, included) { ToManyRelationHandler.new(k, v, included).handle },
-          to_one: ->(k, v, included) { ToOneRelationHandler.new(k, v, included).handle },
-          nil: ->(k, v, included) { NilRelationHandler.new(k, v, included).handle }
-        }
+        @handlers ||= {}.merge(DEFAULT_HANDLER_SET)
       end
     end
   end
