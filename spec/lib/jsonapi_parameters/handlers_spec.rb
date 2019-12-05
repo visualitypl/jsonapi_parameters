@@ -39,7 +39,7 @@ describe JsonApi::Parameters::Handlers do
       handler = described_class.add_handler(:test, -> { puts 'Hello!' })
 
       expect(handler).to be_an_instance_of(Proc)
-      expect(described_class.handlers).to include(handler)
+      expect(described_class.handlers.values).to include(handler)
     end
   end
 
