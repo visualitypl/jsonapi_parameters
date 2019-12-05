@@ -36,7 +36,10 @@ describe JsonApi::Parameters::Handlers do
 
   describe 'custom handlers' do
     it 'allows to add a custom handler' do
-      expect(described_class.add_handler(:test, -> { puts 'Hello!' })).to be_an_instance_of(Proc)
+      handler = described_class.add_handler(:test, -> { puts 'Hello!' })
+
+      expect(handler).to be_an_instance_of(Proc)
+      expect(described_class.handlers).to include(handler)
     end
   end
 
@@ -73,9 +76,9 @@ describe Translator do
         }
       }
 
-      horse_handler = ->(relationship_key, _, _) { ["#{relationship_key}_id".to_sym, nil] }
+      scissors_handler = ->(relationship_key, _, _) { ["#{relationship_key}_id".to_sym, nil] }
 
-      JsonApi::Parameters::Handlers.add_handler(:handle_plural_nil_as_belongs_to_nil, horse_handler)
+      JsonApi::Parameters::Handlers.add_handler(:handle_plural_nil_as_belongs_to_nil, scissors_handler)
       JsonApi::Parameters::Handlers.set_resource_handler(:scissors, :handle_plural_nil_as_belongs_to_nil)
 
       result = trs.jsonapify(params)
