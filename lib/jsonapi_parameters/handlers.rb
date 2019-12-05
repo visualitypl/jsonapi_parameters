@@ -30,7 +30,7 @@ module JsonApi
       end
 
       def reset_handlers!
-        @handlers = {}.merge(DEFAULT_HANDLER_SET)
+        @handlers = DEFAULT_HANDLER_SET.dup
         @resource_handlers = {}
       end
 
@@ -39,7 +39,7 @@ module JsonApi
       end
 
       def handlers
-        @handlers ||= {}.merge(DEFAULT_HANDLER_SET)
+        @handlers ||= DEFAULT_HANDLER_SET.dup
       end
     end
   end
