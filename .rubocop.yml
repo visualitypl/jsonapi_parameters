@@ -50,7 +50,7 @@ Metrics/LineLength:
 Metrics/ModuleLength:
   Max: 120
 Metrics/MethodLength:
-  Max: 25
+  Max: 23
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/EmptyMethod:

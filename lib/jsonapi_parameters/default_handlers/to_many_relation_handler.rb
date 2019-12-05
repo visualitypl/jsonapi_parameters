@@ -5,10 +5,22 @@ module JsonApi
         class ToManyRelationHandler < BaseHandler
           include ActiveSupport::Inflector
 
-          def handle
-            with_inclusion = !relationship_value.empty?
+          attr_reader :with_inclusion, :vals, :key
 
-            vals = relationship_value.map do |relationship|
+          def handle
+            @with_inclusion = !relationship_value.empty?
+
+            prepare_relationship_vals
+
+            generate_key
+
+            [key, vals]
+          end
+
+          private
+
+          def prepare_relationship_vals
+            @vals = relationship_value.map do |relationship|
               related_id = relationship.dig(:id)
               related_type = relationship.dig(:type)
 
@@ -19,7 +31,7 @@ module JsonApi
               # If at least one related object has not been found in `included` tree,
               # we should not attempt to "#{relationship_key}_attributes" but
               # "#{relationship_key}_ids" instead.
-              with_inclusion &= !included_object.empty?
+              @with_inclusion &= !included_object.empty?
 
               if with_inclusion
                 included_object.delete(:type)
@@ -28,19 +40,10 @@ module JsonApi
                 relationship.dig(:id)
               end
             end
+          end
 
-            # We may have smells in our value array as `with_inclusion` may have been changed at some point
-            # but not in the beginning.
-            # Because of that we should clear it and make sure the results are unified (e.g. array of ids)
-            unless with_inclusion
-              vals.map do |val|
-                val.dig(:attributes, :id) if val.is_a?(Hash)
-              end
-            end
-
-            key = with_inclusion ? "#{pluralize(relationship_key)}_attributes".to_sym : "#{singularize(relationship_key)}_ids".to_sym
-
-            [key, vals]
+          def generate_key
+            @key = (with_inclusion ? "#{pluralize(relationship_key)}_attributes" : "#{singularize(relationship_key)}_ids").to_sym
           end
         end
       end
