@@ -62,7 +62,7 @@ describe Translator do
 
   context 'edge case of singular resource with a plural name (scissors)' do
     it 'properly translates with custom resource handler' do
-      trs = described_class.new
+      translator = described_class.new
       params = {
         data: {
           type: 'users',
@@ -81,7 +81,7 @@ describe Translator do
       JsonApi::Parameters::Handlers.add_handler(:handle_plural_nil_as_belongs_to_nil, scissors_handler)
       JsonApi::Parameters::Handlers.set_resource_handler(:scissors, :handle_plural_nil_as_belongs_to_nil)
 
-      result = trs.jsonapify(params)
+      result = translator.jsonapify(params)
 
       expect(result).to eq(
         user: { first_name: 'John', id: '666', scissors_id: nil }
@@ -89,7 +89,7 @@ describe Translator do
     end
 
     it 'would fail with NotImplementedError if no customizations present' do
-      trs = described_class.new
+      translator = described_class.new
       params = {
         data: {
           type: 'users',
@@ -103,7 +103,7 @@ describe Translator do
         }
       }
 
-      expect { trs.jsonapify(params) }.to raise_error(NotImplementedError)
+      expect { translator.jsonapify(params) }.to raise_error(NotImplementedError)
     end
   end
 end
