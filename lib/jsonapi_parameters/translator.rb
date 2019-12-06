@@ -37,16 +37,23 @@ module JsonApi::Parameters
     jsonapi_unsafe_params.tap do |param|
       jsonapi_relationships.each do |relationship_key, relationship_value|
         relationship_value = relationship_value[:data]
-        key, val = case relationship_value
-                   when Array
-                     handle_to_many_relation(relationship_key, relationship_value)
-                   when Hash
-                     handle_to_one_relation(relationship_key, relationship_value)
-                   when nil
-                     handle_nil_relation(relationship_key)
-                   else
-                     raise jsonapi_not_implemented_err
-                   end
+        handler_args = [relationship_key, relationship_value, jsonapi_included]
+        handler = if Handlers.resource_handlers.key?(relationship_key)
+                    Handlers.handlers[Handlers.resource_handlers[relationship_key]]
+                  else
+                    case relationship_value
+                    when Array
+                      Handlers.handlers[:to_many]
+                    when Hash
+                      Handlers.handlers[:to_one]
+                    when nil
+                      Handlers.handlers[:nil]
+                    else
+                      raise NotImplementedError.new('relationship resource linkage has to be a type of Array, Hash or nil')
+                    end
+                  end
+
+        key, val = handler.call(*handler_args)
         param[key] = val
       end
     end
@@ -66,79 +73,5 @@ module JsonApi::Parameters
 
   def jsonapi_relationships
     @jsonapi_relationships ||= @jsonapi_unsafe_hash.dig(:data, :relationships) || []
-  end
-
-  def handle_to_many_relation(relationship_key, relationship_value)
-    with_inclusion = !relationship_value.empty?
-
-    vals = relationship_value.map do |relationship|
-      related_id = relationship.dig(:id)
-      related_type = relationship.dig(:type)
-
-      included_object = find_included_object(
-        related_id: related_id, related_type: related_type
-      ) || {}
-
-      # If at least one related object has not been found in `included` tree,
-      # we should not attempt to "#{relationship_key}_attributes" but
-      # "#{relationship_key}_ids" instead.
-      with_inclusion &= !included_object.empty?
-
-      if with_inclusion
-        included_object.delete(:type)
-        included_object[:attributes].merge(id: related_id)
-      else
-        relationship.dig(:id)
-      end
-    end
-
-    # We may have smells in our value array as `with_inclusion` may have been changed at some point
-    # but not in the beginning.
-    # Because of that we should clear it and make sure the results are unified (e.g. array of ids)
-    unless with_inclusion
-      vals.map do |val|
-        val.dig(:attributes, :id) if val.is_a?(Hash)
-      end
-    end
-
-    key = with_inclusion ? "#{pluralize(relationship_key)}_attributes".to_sym : "#{singularize(relationship_key)}_ids".to_sym
-
-    [key, vals]
-  end
-
-  def handle_to_one_relation(relationship_key, relationship_value)
-    related_id = relationship_value.dig(:id)
-    related_type = relationship_value.dig(:type)
-
-    included_object = find_included_object(
-      related_id: related_id, related_type: related_type
-    ) || {}
-
-    return ["#{singularize(relationship_key)}_id".to_sym, related_id] if included_object.empty?
-
-    included_object.delete(:type)
-    included_object = included_object[:attributes].merge(id: related_id)
-    ["#{singularize(relationship_key)}_attributes".to_sym, included_object]
-  end
-
-  def handle_nil_relation(relationship_key)
-    # Graceful fail if nil on to-many association.
-    raise jsonapi_not_implemented_err if pluralize(relationship_key).to_sym == relationship_key
-
-    # Handle with empty hash.
-    handle_to_one_relation(relationship_key, {})
-  end
-
-  def find_included_object(related_id:, related_type:)
-    jsonapi_included.find do |included_object_enum|
-      included_object_enum[:id] &&
-        included_object_enum[:id] == related_id &&
-        included_object_enum[:type] &&
-        included_object_enum[:type] == related_type
-    end
-  end
-
-  def jsonapi_not_implemented_err
-    NotImplementedError.new('relationship member must either be an Array or a Hash')
   end
 end

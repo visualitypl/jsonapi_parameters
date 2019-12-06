@@ -26,6 +26,8 @@ RSpec/MessageSpies:
   Enabled: false
 RSpec/ContextWording:
   Enabled: false
+RSpec/MultipleDescribes:
+  Enabled: false
 RSpec/ExampleLength:
   Max: 80
 RSpec/MultipleExpectations:
@@ -68,3 +70,5 @@ Style/SymbolArray:
   EnforcedStyle: brackets
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+RSpec/HookArgument:
+  Enabled: false
