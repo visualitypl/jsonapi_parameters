@@ -23,7 +23,9 @@ class AuthorsController < ApplicationController
 
   def author_params
     params.from_jsonapi.require(:author).permit(
-      :name, posts_attributes: [:title, :body, :category_name], post_ids: []
+      :name, :scissors_id,
+      posts_attributes: [:title, :body, :category_name], post_ids: [],
+      scissors_attributes: [:sharp],
     )
   end
 end

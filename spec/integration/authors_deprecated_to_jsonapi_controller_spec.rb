@@ -22,6 +22,7 @@ describe AuthorsDeprecatedToJsonapiController, type: :controller do
             name: 'John Doe'
           },
           relationships: {
+            scissors: { data: nil },
             posts: {
               data: []
             }
@@ -70,6 +71,7 @@ describe AuthorsDeprecatedToJsonapiController, type: :controller do
           name: 'John Doe'
         },
         relationships: {
+          scissors: { data: nil },
           posts: {
             data: [
               {
