@@ -15,7 +15,9 @@ module JsonApi::Parameters
     return params if params.nil? || params.empty?
 
     @jsonapi_unsafe_hash = if naming_convention != :snake || JsonApi::Parameters.ensure_underscore_translation
-                             params.deep_transform_keys { |key| key.to_s.underscore.to_sym }
+                             params = params.deep_transform_keys { |key| key.to_s.underscore.to_sym }
+                             params[:data][:type] = params[:data][:type].underscore if params.dig(:data, :type)
+                             params
                            else
                              params.deep_symbolize_keys
                            end
