@@ -51,6 +51,7 @@ describe Translator do
             kase.each do |case_name, case_data|
               it "matches #{case_name}" do
                 input, predicted_output = case_data
+                input[:data][:type] = input[:data][:type].camelize
                 input = input.deep_transform_keys { |key| key.to_s.camelize.to_sym }
                 input = ActionController::Parameters.new(input)
 
@@ -70,6 +71,7 @@ describe Translator do
             kase.each do |case_name, case_data|
               it "matches #{case_name}" do
                 input, predicted_output = case_data
+                input[:data][:type] = input[:data][:type].dasherize
                 input = input.deep_transform_keys { |key| key.to_s.dasherize.to_sym }
                 input = ActionController::Parameters.new(input)
 
@@ -136,6 +138,7 @@ describe Translator do
                 JsonApi::Parameters.ensure_underscore_translation = true
 
                 input, predicted_output = case_data
+                input[:data][:type] = input[:data][:type].camelize
                 input = input.deep_transform_keys { |key| key.to_s.camelize.to_sym }
                 input = ActionController::Parameters.new(input)
 
@@ -159,6 +162,7 @@ describe Translator do
                 JsonApi::Parameters.ensure_underscore_translation = true
 
                 input, predicted_output = case_data
+                input[:data][:type] = input[:data][:type].dasherize
                 input = input.deep_transform_keys { |key| key.to_s.dasherize.to_sym }
                 input = ActionController::Parameters.new(input)
 

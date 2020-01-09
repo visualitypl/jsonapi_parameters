@@ -273,6 +273,17 @@ module JsonApi::Parameters::Testing
             genre_ids: [74]
           }
         }
+      ],
+      'long type name' => [
+        {
+          data: {
+            type: 'message_board_threads',
+            attributes: {
+              thread_title: 'Introductory Thread'
+            }
+          }
+        },
+        { message_board_thread: { thread_title: 'Introductory Thread' } }
       ]
     ],
     'PATCH update payloads' => [
