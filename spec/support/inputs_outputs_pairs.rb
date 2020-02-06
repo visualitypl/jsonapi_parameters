@@ -274,7 +274,7 @@ module JsonApi::Parameters::Testing
           }
         }
       ],
-      'long type name' => [
+      'long type name - type casing translation (https://github.com/visualitypl/jsonapi_parameters/pull/31)' => [
         {
           data: {
             type: 'message_board_threads',
