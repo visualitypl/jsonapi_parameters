@@ -1,18 +1,28 @@
 version: 2.0
 defaults: &defaults
-  working_directory: ~/repo
   steps:
+    - checkout
+    - attach_workspace:
+        at: ~/project/tmp
     - run:
         name: Bundle
         command: bundle install
     - run:
         name: bin/ci
         command: bin/ci
+    - run:
+        name: Generate coverage
+        command: ./tmp/cc-test-reporter format-coverage -t simplecov -o ./tmp/codeclimate.$CIRCLE_JOB.json coverage/.resultset.json
+    - persist_to_workspace:
+        root: ~/project/tmp
+        paths:
+          - ./*.json
+
 jobs:
   ruby-240:
     <<: *defaults
     docker:
-      - image: circleci/ruby:2.4.0
+      - image: circleci/ruby:2.4
   ruby-250:
     <<: *defaults
     docker:
@@ -21,12 +31,53 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/ruby:2.6.0
+  download-and-persist-cc-test-reporter:
+    docker:
+        - image: circleci/ruby:2.6.0
+    steps:
+      - run:
+          name:  Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+  upload-test-coverage:
+    docker:
+      - image: circleci/ruby:2.6.0
+    steps:
+      - attach_workspace:
+          at: ~/project/tmp
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p $(ls -la |grep -i ruby |wc -l |awk '{print $1}') -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
 
 workflows:
   version: 2
 
   commit:
     jobs:
-      - ruby-240
-      - ruby-250
-      - ruby-260
+      - download-and-persist-cc-test-reporter
+      - ruby-240:
+          requires:
+            - download-and-persist-cc-test-reporter
+      - ruby-250:
+          requires:
+            - download-and-persist-cc-test-reporter
+      - ruby-260:
+          requires:
+            - download-and-persist-cc-test-reporter
+      - upload-test-coverage:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - ruby-240
+            - ruby-250
+            - ruby-260
