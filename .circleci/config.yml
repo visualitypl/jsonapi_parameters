@@ -1,6 +1,7 @@
 version: 2.0
 defaults: &defaults
   steps:
+    - checkout
     - run:
         name: Bundle
         command: bundle install
