@@ -73,6 +73,10 @@ workflows:
           requires:
             - download-and-persist-cc-test-reporter
       - upload-test-coverage:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - ruby-240
             - ruby-250
