@@ -273,6 +273,17 @@ module JsonApi::Parameters::Testing
             genre_ids: [74]
           }
         }
+      ],
+      'long type name - type casing translation (https://github.com/visualitypl/jsonapi_parameters/pull/31)' => [
+        {
+          data: {
+            type: 'message_board_threads',
+            attributes: {
+              thread_title: 'Introductory Thread'
+            }
+          }
+        },
+        { message_board_thread: { thread_title: 'Introductory Thread' } }
       ]
     ],
     'PATCH update payloads' => [
