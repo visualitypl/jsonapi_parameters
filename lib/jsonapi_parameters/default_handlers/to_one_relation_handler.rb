@@ -6,18 +6,35 @@ module JsonApi
           include ActiveSupport::Inflector
 
           def handle
-            related_id = relationship_value.dig(:id)
-            related_type = relationship_value.dig(:type)
+            if included_object.empty?
+              [key, related_id]
+            else
+              included_atttributes = included_object[:attributes].merge(id: related_id)
+              [key, included_atttributes]
+            end
+          end
 
-            included_object = find_included_object(
-              related_id: related_id, related_type: related_type
-            ) || {}
+          private
 
-            return ["#{singularize(relationship_key)}_id".to_sym, related_id] if included_object.empty?
+          def included_object
+            @included_object ||= begin
+              related_type = relationship_value.dig(:type)
+              find_embedded_object(relationship: relationship_value) ||
+              find_included_object(related_id: related_id, related_type: related_type) ||
+              {}
+            end
+          end
 
-            included_object.delete(:type)
-            included_object = included_object[:attributes].merge(id: related_id)
-            ["#{singularize(relationship_key)}_attributes".to_sym, included_object]
+          def key
+            @key ||= if included_object.empty?
+                       "#{singularize(relationship_key)}_id".to_sym
+                     else
+                       "#{singularize(relationship_key)}_attributes".to_sym
+                     end
+          end
+
+          def related_id
+            @related_id ||= relationship_value.dig(:id)
           end
         end
       end

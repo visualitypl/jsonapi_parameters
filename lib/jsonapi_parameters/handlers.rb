@@ -8,9 +8,9 @@ module JsonApi
       include DefaultHandlers
 
       DEFAULT_HANDLER_SET = {
-        to_many: ->(k, v, included) { ToManyRelationHandler.new(k, v, included).handle },
-        to_one: ->(k, v, included) { ToOneRelationHandler.new(k, v, included).handle },
-        nil: ->(k, v, included) { NilRelationHandler.new(k, v, included).handle }
+        to_many: ToManyRelationHandler,
+        to_one: ToOneRelationHandler,
+        nil: NilRelationHandler
       }.freeze
 
       module_function

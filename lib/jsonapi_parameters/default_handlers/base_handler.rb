@@ -11,6 +11,12 @@ module JsonApi
             @included = included
           end
 
+          def find_embedded_object(relationship:)
+            return if relationship[:attributes].nil? || relationship[:attributes].empty?
+
+            relationship.slice(:attributes)
+          end
+
           def find_included_object(related_id:, related_type:)
             included.find do |included_object_enum|
               included_object_enum[:id] &&
@@ -18,6 +24,10 @@ module JsonApi
                 included_object_enum[:type] &&
                 included_object_enum[:type] == related_type
             end
+          end
+
+          def self.call(key, val, included)
+            new(key, val, included).handle
           end
         end
       end

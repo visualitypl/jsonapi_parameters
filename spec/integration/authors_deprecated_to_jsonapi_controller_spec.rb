@@ -31,7 +31,7 @@ describe AuthorsDeprecatedToJsonapiController, type: :controller do
       )
     end
 
-    it 'creates an author with posts' do
+    it 'creates an author with included posts' do
       params = {
         data: {
           type: 'authors',
@@ -60,6 +60,54 @@ describe AuthorsDeprecatedToJsonapiController, type: :controller do
             }
           }
         ]
+      }
+
+      post :create, params: params
+
+      expect(jsonapi_response[:data]).to eq(
+        id: '1',
+        type: 'author',
+        attributes: {
+          name: 'John Doe'
+        },
+        relationships: {
+          scissors: { data: nil },
+          posts: {
+            data: [
+              {
+                id: '1',
+                type: 'post'
+              }
+            ]
+          }
+        }
+      )
+      expect(Post.find(1).category_name).to eq('Some category')
+    end
+
+    it 'creates an author with embedded posts' do
+      params = {
+        data: {
+          type: 'authors',
+          attributes: {
+            name: 'John Doe'
+          },
+          relationships: {
+            posts: {
+              data: [
+                {
+                  id: '123',
+                  type: 'post',
+                  attributes: {
+                    title: 'Some title',
+                    body: 'Some body that I used to love',
+                    category_name: 'Some category'
+                  }
+                }
+              ]
+            }
+          }
+        }
       }
 
       post :create, params: params
