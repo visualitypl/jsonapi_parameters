@@ -99,7 +99,7 @@ This gems intention is to make input consumption as easy as possible. Hence, it 
 
 If you need custom relationship handling (for instance, if you have a relationship named `scissors` that is plural, but it actually is a single entity), you can use Handlers to define appropriate behaviour.
 
-Read more at [Relationship Handlers]()
+Read more at [Relationship Handlers](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationship-handlers).
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
