@@ -19,6 +19,10 @@ module JsonApi
                 included_object_enum[:type] == related_type
             end
           end
+
+          def self.call(key, val, included)
+            new(key, val, included).handle
+          end
         end
       end
     end
