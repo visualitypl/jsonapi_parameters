@@ -5,6 +5,10 @@ module JsonApi
         class BaseHandler
           attr_reader :relationship_key, :relationship_value, :included
 
+          def self.call(key, val, included)
+            new(key, val, included).handle
+          end
+
           def initialize(relationship_key, relationship_value, included)
             @relationship_key = relationship_key
             @relationship_value = relationship_value
@@ -18,10 +22,6 @@ module JsonApi
                 included_object_enum[:type] &&
                 included_object_enum[:type] == related_type
             end
-          end
-
-          def self.call(key, val, included)
-            new(key, val, included).handle
           end
         end
       end
