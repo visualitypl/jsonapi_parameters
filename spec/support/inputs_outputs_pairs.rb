@@ -209,7 +209,7 @@ module JsonApi::Parameters::Testing
                 }
               }
             }
-            }
+          }
         },
         {
           movie: {
@@ -287,150 +287,150 @@ module JsonApi::Parameters::Testing
       ]
     ],
     'PATCH update payloads' => [
-        'https://jsonapi.org/format/#crud example (modified, multiple photographers)' => [
-          {
-            data: {
-              type: 'photos',
+      'https://jsonapi.org/format/#crud example (modified, multiple photographers)' => [
+        {
+          data: {
+            type: 'photos',
+            attributes: {
+              title: 'Ember Hamster',
+              src: 'http://example.com/images/productivity.png'
+            },
+            relationships: {
+              photographers: {
+                data: [
+                  {
+                    type: 'people',
+                    id: 9
+                  },
+                  {
+                    type: 'people',
+                    id: 10
+                  }
+                ]
+              }
+            }
+          },
+          included: [
+            {
+              type: 'people',
+              id: 10,
               attributes: {
-                title: 'Ember Hamster',
-                src: 'http://example.com/images/productivity.png'
-              },
-              relationships: {
-                photographers: {
-                  data: [
-                    {
-                      type: 'people',
-                      id: 9
-                    },
-                    {
-                      type: 'people',
-                      id: 10
-                    }
-                  ]
-                }
+                name: 'Some guy'
               }
             },
-            included: [
+            {
+              type: 'people',
+              id: 9,
+              attributes: {
+                name: 'Some other guy'
+              }
+            }
+          ]
+        },
+        {
+          photo: {
+            title: 'Ember Hamster',
+            src: 'http://example.com/images/productivity.png',
+            photographers_attributes: [
               {
-                type: 'people',
-                id: 10,
-                attributes: {
-                  name: 'Some guy'
-                }
+                id: 9,
+                name: 'Some other guy'
               },
               {
-                type: 'people',
-                id: 9,
-                attributes: {
-                  name: 'Some other guy'
-                }
+                id: 10,
+                name: 'Some guy'
               }
             ]
-          },
-          {
-            photo: {
-              title: 'Ember Hamster',
-              src: 'http://example.com/images/productivity.png',
-              photographers_attributes: [
-                {
-                  id: 9,
-                  name: 'Some other guy'
-                },
-                {
-                  id: 10,
-                  name: 'Some guy'
-                }
-              ]
-            }
           }
-        ],
-        'https://jsonapi.org/format/#crud-updating-to-many-relationships example (removal, all photographers)' => [
-          {
-            data: {
-              type: 'photos',
-              attributes: {
-                title: 'Ember Hamster',
-                src: 'http://example.com/images/productivity.png'
-              },
-              relationships: {
-                photographers: {
-                  data: []
-                }
+        }
+      ],
+      'https://jsonapi.org/format/#crud-updating-to-many-relationships example (removal, all photographers)' => [
+        {
+          data: {
+            type: 'photos',
+            attributes: {
+              title: 'Ember Hamster',
+              src: 'http://example.com/images/productivity.png'
+            },
+            relationships: {
+              photographers: {
+                data: []
               }
             }
-          },
-          {
-            photo: {
-              title: 'Ember Hamster',
-              src: 'http://example.com/images/productivity.png',
-              photographer_ids: []
-            }
           }
-        ],
-        'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single owner)' => [
-          {
-            data: {
-              type: 'account',
-              attributes: {
-                name: 'Bob Loblaw',
-                profile_url: 'http://example.com/images/no-nonsense.png'
-              },
-              relationships: {
-                owner: {
-                  data: nil
-                }
-              }
-            }
-          },
-          {
-            account: {
+        },
+        {
+          photo: {
+            title: 'Ember Hamster',
+            src: 'http://example.com/images/productivity.png',
+            photographer_ids: []
+          }
+        }
+      ],
+      'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single owner)' => [
+        {
+          data: {
+            type: 'account',
+            attributes: {
               name: 'Bob Loblaw',
-              profile_url: 'http://example.com/images/no-nonsense.png',
-              owner_id: nil
-            }
-          }
-        ],
-        'https://github.com/pstrzalk case of emptying has_many relationship (w/ empty included)' => [
-          {
-            data: {
-              type: 'users',
-              attributes: {
-                name: 'Adam Joe'
-              },
-              relationships: {
-                practice_areas: {
-                  data: []
-                }
-              },
-              included: []
-            }
-          },
-          {
-            user: {
-              name: 'Adam Joe', practice_area_ids: [],
-            }
-          }
-        ],
-        'https://github.com/pstrzalk case of emptying has_many relationship (w/o included)' => [
-          {
-            data: {
-              type: 'users',
-              attributes: {
-                name: 'Adam Joe'
-              },
-              relationships: {
-                practice_areas: {
-                  data: []
-                }
+              profile_url: 'http://example.com/images/no-nonsense.png'
+            },
+            relationships: {
+              owner: {
+                data: nil
               }
             }
-          },
-          {
-            user: {
-              name: 'Adam Joe', practice_area_ids: [],
+          }
+        },
+        {
+          account: {
+            name: 'Bob Loblaw',
+            profile_url: 'http://example.com/images/no-nonsense.png',
+            owner_id: nil
+          }
+        }
+      ],
+      'https://github.com/pstrzalk case of emptying has_many relationship (w/ empty included)' => [
+        {
+          data: {
+            type: 'users',
+            attributes: {
+              name: 'Adam Joe'
+            },
+            relationships: {
+              practice_areas: {
+                data: []
+              }
+            },
+            included: []
+          }
+        },
+        {
+          user: {
+            name: 'Adam Joe', practice_area_ids: [],
+          }
+        }
+      ],
+      'https://github.com/pstrzalk case of emptying has_many relationship (w/o included)' => [
+        {
+          data: {
+            type: 'users',
+            attributes: {
+              name: 'Adam Joe'
+            },
+            relationships: {
+              practice_areas: {
+                data: []
+              }
             }
           }
-        ]
+        },
+        {
+          user: {
+            name: 'Adam Joe', practice_area_ids: [],
+          }
+        }
+      ]
     ]
   }
 end

@@ -13,17 +13,11 @@ require_relative "app/config/environment"
 ActiveRecord::Migrator.migrations_paths = [File.expand_path("app/db/migrate", __dir__)]
 
 require 'jsonapi_parameters'
+require_relative './support/inputs_outputs_pairs'
 require 'database_cleaner'
 require 'factory_bot'
 require 'hashdiff'
 
-Dir[
-  File.expand_path(
-    File.join(
-      File.dirname(__FILE__), 'support', '**', '*.rb'
-    )
-  )
-].each {|f| require f}
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
