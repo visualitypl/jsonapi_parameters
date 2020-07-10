@@ -31,6 +31,10 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/ruby:2.6.0
+  ruby-270:
+    <<: *defaults
+    docker:
+      - image: circleci/ruby:2.7.0
   download-and-persist-cc-test-reporter:
     docker:
         - image: circleci/ruby:2.6.0
@@ -72,6 +76,9 @@ workflows:
       - ruby-260:
           requires:
             - download-and-persist-cc-test-reporter
+      - ruby-270:
+          requires:
+            - download-and-persist-cc-test-reporter
       - upload-test-coverage:
           filters:
             branches:
@@ -81,3 +88,4 @@ workflows:
             - ruby-240
             - ruby-250
             - ruby-260
+            - ruby-270
