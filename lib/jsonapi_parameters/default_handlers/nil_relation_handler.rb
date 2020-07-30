@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 require_relative './base_handler'
 
 module JsonApi
