@@ -284,6 +284,54 @@ module JsonApi::Parameters::Testing
           }
         },
         { message_board_thread: { thread_title: 'Introductory Thread' } }
+      ],
+      'triple-nested payload' => [
+        {
+          data: {
+            type: 'entity',
+            relationships: {
+              subentity: {
+                data: {
+                  type: 'entity',
+                  id: 1
+                }
+              }
+            }
+          },
+          included: [
+            {
+              id: 1, type: 'entity', relationships: {
+              subentity: {
+                data: {
+                  type: 'entity',
+                  id: 2
+                }
+              }
+            }
+            },
+            {
+              id: 2, type: 'entity', relationships: {
+              subentity: {
+                data: {
+                  type: 'entity',
+                  id: 3
+                }
+              }
+            }
+            }
+          ]
+        },
+        {
+          entity: {
+            subentity_attributes: {
+              id: 1,
+              subentity_attributes: {
+                id: 2,
+                subentity_id: 3
+              }
+            }
+          }
+        }
       ]
     ],
     'PATCH update payloads' => [
@@ -430,7 +478,143 @@ module JsonApi::Parameters::Testing
             name: 'Adam Joe', practice_area_ids: [],
           }
         }
-      ]
+      ],
+      'os-15 case - nested relationship within a relationship' => [
+        {
+          data: {
+            id: "1", type: "contacts",
+            relationships: {
+              contacts_employment_statuses: {
+                data: [
+                  { id: 444, type: "contact_employment_statuses" }
+                ]
+              }
+            }
+          },
+          included: [
+            {
+              id: 444, type: "contact_employment_statuses",
+              attributes: {
+                involved_in: true, receives_submissions: false
+              },
+              relationships: {
+                employment_status: { data: { id: 110, type: "employment_statuses" } }
+              }
+            }
+          ]
+        },
+        {
+          contact: {
+            id: "1",
+            contacts_employment_statuses_attributes: [
+              { id: 444, involved_in: true, receives_submissions: false, employment_status_id: 110 }
+            ]
+          }
+        }
+      ],
+      'os-15 case extended - nested relationship within a to-many relationship, with an included object' => [
+        {
+          data: {
+            id: "1", type: "contacts",
+            relationships: {
+              contacts_employment_statuses: {
+                data: [
+                  { id: 444, type: "contact_employment_statuses" }
+                ]
+              }
+            }
+          },
+          included: [
+            {
+              id: 444, type: "contact_employment_statuses",
+              attributes: {
+                involved_in: true, receives_submissions: false
+              },
+              relationships: {
+                employment_status: { data: { id: 110, type: "employment_statuses" } }
+              }
+            },
+            {
+              id: 110, type: "employment_statuses",
+              attributes: {
+                status: "yes",
+              }
+            }
+          ]
+        },
+        {
+          contact: {
+            id: "1",
+            contacts_employment_statuses_attributes: [
+              { id: 444, involved_in: true, receives_submissions: false, employment_status_attributes: { id: 110, status: "yes" } }
+            ]
+          }
+        }
+      ],
+      'os-15 case extended - nested relationship within a to-many relationship, with a to-many relationship' => [
+        {
+          data: {
+            id: "1", type: "contacts",
+            relationships: {
+              contacts_employment_statuses: {
+                data: [
+                  { id: 444, type: "contact_employment_statuses" }
+                ]
+              }
+            }
+          },
+          included: [
+            {
+              id: 444, type: "contact_employment_statuses",
+              attributes: {
+                involved_in: true, receives_submissions: false
+              },
+              relationships: {
+                employment_status: { data: [{ id: 110, type: "employment_statuses" }] }
+              }
+            },
+          ]
+        },
+        {
+          contact: {
+            id: "1",
+            contacts_employment_statuses_attributes: [
+              { id: 444, involved_in: true, receives_submissions: false, employment_status_ids: [110] }
+            ]
+          }
+        }
+      ],
+      'os-15 case extended - nested relationship within a to-one relationship' => [
+        {
+          data: {
+            id: "1", type: "contacts",
+            relationships: {
+              contacts_employment_status: {
+                data: { id: 444, type: "contact_employment_status" }
+              }
+            }
+          },
+          included: [
+            {
+              id: 444, type: "contact_employment_status",
+              attributes: {
+                involved_in: true, receives_submissions: false
+              },
+              relationships: {
+                employment_status: { data: { id: 110, type: "employment_statuses" } }
+              }
+            }
+          ]
+        },
+        {
+          contact: {
+            id: "1",
+            contacts_employment_status_attributes: {
+              id: 444, involved_in: true, receives_submissions: false, employment_status_id: 110
+            }
+          }
+        }
+      ],
     ]
   }
 end
