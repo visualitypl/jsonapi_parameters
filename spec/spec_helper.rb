@@ -33,3 +33,13 @@ RSpec.configure do |config|
     end
   end
 end
+
+def select_io_pair_by_name(category, name)
+  JsonApi::Parameters::Testing::PAIRS[category].find do |example|
+    example.key?(name)
+  end[name].deep_dup
+end
+
+def select_input_by_name(category, name)
+  select_io_pair_by_name(category, name)[0]
+end
