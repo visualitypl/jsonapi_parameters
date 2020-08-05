@@ -9,7 +9,6 @@ AllCops:
     - 'bin/**/*'
     - 'tmp/**/*'
     - '*.gemspec'
-    - '**/spec/spec_helper.rb'
     - '**/spec/support/inputs_outputs_pairs.rb'
     - '**/spec/app/**/*'
     - 'gemfiles/**/*'
