@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   post :stack_default, controller: 'stack_tester'
   post :stack_custom_limit, controller: 'stack_tester'
+  post :short_stack_custom_limit, controller: 'stack_tester'
 
   resources :authors, only: [:create, :update]
   resources :authors_deprecated_to_jsonapi, only: [:create]

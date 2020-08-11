@@ -31,5 +31,15 @@ describe 'Stack Tester requests', type: :request do
 
       expect(response).to have_http_status(200)
     end
+
+    it 'passes when stack limit is above default using short notation' do
+      payload = select_input_by_name('POST create payloads', 'triple-nested payload')
+
+      payload[:included] << { id: 3, type: 'entity', relationships: { subentity: { data: { type: 'entity', id: 4 } } } }
+
+      post short_stack_custom_limit_path, params: payload
+
+      expect(response).to have_http_status(200)
+    end
   end
 end

@@ -11,6 +11,12 @@ class StackTesterController < ApplicationController
     head 200
   end
 
+  def short_stack_custom_limit
+    params.from_jsonapi(custom_stack_limit: 4)
+
+    head 200
+  end
+
   private
 
   def parse_params_custom
@@ -18,6 +24,6 @@ class StackTesterController < ApplicationController
 
     params.from_jsonapi
   ensure
-    params.reset_stack_limit!
+    params.reset_stack_limit
   end
 end

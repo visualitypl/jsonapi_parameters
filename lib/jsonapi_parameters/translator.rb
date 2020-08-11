@@ -3,7 +3,9 @@ require 'active_support/inflector'
 module JsonApi::Parameters
   include ActiveSupport::Inflector
 
-  def jsonapify(params, naming_convention: :snake)
+  def jsonapify(params, naming_convention: :snake, custom_stack_limit: stack_limit)
+    self.stack_limit = custom_stack_limit
+
     jsonapi_translate(params, naming_convention: naming_convention)
   end
 
@@ -42,7 +44,7 @@ module JsonApi::Parameters
       end
     end
   ensure
-    reset_stack_level!
+    reset_stack_level
   end
 
   def jsonapi_unsafe_params
@@ -87,7 +89,7 @@ module JsonApi::Parameters
 
     param
   ensure
-    decrement_stack_level!
+    decrement_stack_level
   end
 
   def handle_nested_relationships(val)

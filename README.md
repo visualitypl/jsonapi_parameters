@@ -105,19 +105,33 @@ For this reason we have introduced a default limit of stack levels that JsonApi:
 This default limit is 3, and can be overwritten by specifying the custom limit.
 
 #### Ruby
-```
+``` 
 class Translator
     include JsonApi::Parameters
 end
 
 translator = Translator.new
+
+translator.jsonapify(custom_stack_limit: 4)
+
+# OR
+ 
 translator.stack_limit = 4
+translator.jsonapify.(...)
 ``` 
 
 #### Rails
 ```
 # config/initializers/jsonapi_parameters.rb
 
+def create_params
+    params.from_jsonapi(custom_stack_limit: 4).require(:user).permit(
+        entities_attributes: { subentities_attributes: { ... } }
+    )
+end
+
+# OR
+ 
 def create_params
     params.stack_level = 4
 

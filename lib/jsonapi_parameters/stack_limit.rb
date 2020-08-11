@@ -5,6 +5,17 @@ module JsonApi
     class StackLevelTooDeep < StandardError
     end
 
+    def self.included(base)
+      base.class_eval do
+        def initialize
+          super
+
+          reset_stack_level
+          reset_stack_limit
+        end
+      end
+    end
+
     def stack_limit=(val)
       @stack_limit = val
     end
@@ -13,7 +24,7 @@ module JsonApi
       @stack_limit ||= LIMIT
     end
 
-    def reset_stack_limit!
+    def reset_stack_limit
       @stack_limit = LIMIT
     end
 
@@ -27,13 +38,13 @@ module JsonApi
       raise StackLevelTooDeep.new(stack_exception_message) if @current_stack_level > stack_limit
     end
 
-    def decrement_stack_level!
+    def decrement_stack_level
       @current_stack_level ||= 1
 
       @current_stack_level -= 1
     end
 
-    def reset_stack_level!
+    def reset_stack_level
       @current_stack_level = 0
     end
 

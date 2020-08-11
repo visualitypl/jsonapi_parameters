@@ -9,7 +9,7 @@ end
 
 describe JsonApi::Parameters::Handlers do
   before(:each) do
-    described_class.reset_handlers!
+    described_class.reset_handlers
   end
 
   describe 'reset_handlers!' do
@@ -18,7 +18,7 @@ describe JsonApi::Parameters::Handlers do
 
       expect(described_class::DEFAULT_HANDLER_SET).not_to include(handler)
 
-      described_class.reset_handlers!
+      described_class.reset_handlers
 
       expect(described_class.handlers).not_to include(handler)
       expect(described_class.handlers).to eq(described_class::DEFAULT_HANDLER_SET)
@@ -28,7 +28,7 @@ describe JsonApi::Parameters::Handlers do
       described_class.add_handler(:test, -> { puts 'Hello!' })
       described_class.set_resource_handler(:test, :test)
 
-      described_class.reset_handlers!
+      described_class.reset_handlers
 
       expect(described_class.resource_handlers).to eq({})
     end
@@ -57,7 +57,7 @@ end
 
 describe Translator do
   before(:each) do
-    JsonApi::Parameters::Handlers.reset_handlers!
+    JsonApi::Parameters::Handlers.reset_handlers
   end
 
   context 'edge case of singular resource with a plural name (scissors)' do
