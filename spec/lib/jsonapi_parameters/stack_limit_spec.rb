@@ -14,7 +14,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
 
       translator = described_class.new
 
-      expect { translator.jsonapify(input) }.not_to raise_error(JsonApi::Parameters::StackLevelTooDeep)
+      expect { translator.jsonapify(input) }.not_to raise_error(JsonApi::Parameters::StackLevelTooDeepError)
       expect { translator.jsonapify(input) }.not_to raise_error # To ensure this is passing
     end
 
@@ -25,7 +25,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
 
       translator = described_class.new
 
-      expect { translator.jsonapify(input) }.to raise_error(JsonApi::Parameters::StackLevelTooDeep)
+      expect { translator.jsonapify(input) }.to raise_error(JsonApi::Parameters::StackLevelTooDeepError)
     end
   end
 
@@ -36,7 +36,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
       translator = described_class.new
       translator.stack_limit = 4
 
-      expect { translator.jsonapify(input) }.not_to raise_error(JsonApi::Parameters::StackLevelTooDeep)
+      expect { translator.jsonapify(input) }.not_to raise_error(JsonApi::Parameters::StackLevelTooDeepError)
       expect { translator.jsonapify(input) }.not_to raise_error # To ensure this is passing
     end
 
@@ -45,7 +45,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
       input[:included] << { id: 3, type: 'entity', relationships: { subentity: { data: { type: 'entity', id: 4 } } } }
       translator = described_class.new
 
-      expect { translator.jsonapify(input, custom_stack_limit: 4) }.not_to raise_error(JsonApi::Parameters::StackLevelTooDeep)
+      expect { translator.jsonapify(input, custom_stack_limit: 4) }.not_to raise_error(JsonApi::Parameters::StackLevelTooDeepError)
       expect { translator.jsonapify(input, custom_stack_limit: 4) }.not_to raise_error # To ensure this is passing
     end
 
@@ -57,7 +57,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
 
       translator.reset_stack_limit
 
-      expect { translator.jsonapify(input) }.to raise_error(JsonApi::Parameters::StackLevelTooDeep)
+      expect { translator.jsonapify(input) }.to raise_error(JsonApi::Parameters::StackLevelTooDeepError)
     end
   end
 end

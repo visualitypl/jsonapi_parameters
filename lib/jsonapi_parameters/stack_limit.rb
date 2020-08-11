@@ -2,7 +2,7 @@ module JsonApi
   module Parameters
     LIMIT = 3
 
-    class StackLevelTooDeep < StandardError
+    class StackLevelTooDeepError < StandardError
     end
 
     def self.included(base)
@@ -35,7 +35,7 @@ module JsonApi
 
       @current_stack_level += 1
 
-      raise StackLevelTooDeep.new(stack_exception_message) if @current_stack_level > stack_limit
+      raise StackLevelTooDeepError.new(stack_exception_message) if @current_stack_level > stack_limit
     end
 
     def decrement_stack_level
