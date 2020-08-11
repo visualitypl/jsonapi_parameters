@@ -9,5 +9,4 @@ Rails.application.routes.draw do
   resources :authors_deprecated_to_jsonapi, only: [:create]
   resources :authors_camel, only: [:create]
   resources :authors_dashed, only: [:create]
-
 end
