@@ -10,7 +10,7 @@ module JsonApi
     end
 
     def stack_limit
-      @stack_limit ||= LIMIT
+      @stack_limit || LIMIT
     end
 
     def reset_stack_limit
@@ -19,9 +19,12 @@ module JsonApi
 
     private
 
-    def increment_stack_level!
-      @current_stack_level ||= 0
+    def initialize_stack(custom_stack_limit)
+      @current_stack_level = 0
+      @stack_limit = custom_stack_limit
+    end
 
+    def increment_stack_level!
       @current_stack_level += 1
 
       raise StackLevelTooDeepError.new(stack_exception_message) if @current_stack_level > stack_limit

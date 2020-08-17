@@ -4,7 +4,7 @@ module JsonApi::Parameters
   include ActiveSupport::Inflector
 
   def jsonapify(params, naming_convention: :snake, custom_stack_limit: stack_limit)
-    self.stack_limit = custom_stack_limit
+    initialize_stack(custom_stack_limit)
 
     jsonapi_translate(params, naming_convention: naming_convention)
   end
