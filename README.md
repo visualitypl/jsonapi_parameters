@@ -105,7 +105,7 @@ For this reason we have introduced a default limit of stack levels that JsonApi:
 This default limit is 3, and can be overwritten by specifying the custom limit.
 
 #### Ruby
-``` 
+```ruby
 class Translator
     include JsonApi::Parameters
 end
@@ -121,7 +121,7 @@ translator.jsonapify.(...)
 ``` 
 
 #### Rails
-```
+```ruby
 # config/initializers/jsonapi_parameters.rb
 
 def create_params
