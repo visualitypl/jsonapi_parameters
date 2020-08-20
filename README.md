@@ -122,8 +122,6 @@ translator.jsonapify.(...)
 
 #### Rails
 ```ruby
-# config/initializers/jsonapi_parameters.rb
-
 def create_params
     params.from_jsonapi(custom_stack_limit: 4).require(:user).permit(
         entities_attributes: { subentities_attributes: { ... } }
