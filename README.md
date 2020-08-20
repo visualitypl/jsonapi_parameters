@@ -93,7 +93,53 @@ translator.jsonapify(params)
 
 As [stated in the JSON:API specification](https://jsonapi.org/#mime-types) correct mime type for JSON:API input should be [`application/vnd.api+json`](http://www.iana.org/assignments/media-types/application/vnd.api+json). 
 
-This gems intention is to make input consumption as easy as possible. Hence, it [registers this mime type for you](lib/jsonapi_parameters/core_ext/action_dispatch/http/mime_type.rb). 
+This gem's intention is to make input consumption as easy as possible. Hence, it [registers this mime type for you](lib/jsonapi_parameters/core_ext/action_dispatch/http/mime_type.rb).
+
+## Stack limit
+
+In theory, any payload may consist of infinite amount of relationships (and so each relationship may have its own, included, infinite amount of nested relationships).
+Because of that, it is a potential vector of attack. 
+
+For this reason we have introduced a default limit of stack levels that JsonApi::Parameters will go down through while parsing the payloads. 
+
+This default limit is 3, and can be overwritten by specifying the custom limit.
+
+#### Ruby
+``` 
+class Translator
+    include JsonApi::Parameters
+end
+
+translator = Translator.new
+
+translator.jsonapify(custom_stack_limit: 4)
+
+# OR
+ 
+translator.stack_limit = 4
+translator.jsonapify.(...)
+``` 
+
+#### Rails
+```
+# config/initializers/jsonapi_parameters.rb
+
+def create_params
+    params.from_jsonapi(custom_stack_limit: 4).require(:user).permit(
+        entities_attributes: { subentities_attributes: { ... } }
+    )
+end
+
+# OR
+ 
+def create_params
+    params.stack_level = 4
+
+    params.from_jsonapi.require(:user).permit(entities_attributes: { subentities_attributes: { ... } })
+ensure
+    params.reset_stack_limit!
+end
+```
 
 ## Customization
 

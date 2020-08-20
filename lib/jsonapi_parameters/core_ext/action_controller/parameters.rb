@@ -9,7 +9,7 @@ class ActionController::Parameters
     from_jsonapi(*args)
   end
 
-  def from_jsonapi(naming_convention = :snake)
-    @from_jsonapi ||= self.class.new jsonapify(self, naming_convention: naming_convention)
+  def from_jsonapi(naming_convention = :snake, custom_stack_limit: stack_limit)
+    @from_jsonapi ||= self.class.new jsonapify(self, naming_convention: naming_convention, custom_stack_limit: custom_stack_limit)
   end
 end

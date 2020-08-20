@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 module JsonApi
   module Parameters
     module Handlers
@@ -34,8 +36,9 @@ module JsonApi
               @with_inclusion &= !included_object.empty?
 
               if with_inclusion
-                included_object.delete(:type)
-                included_object[:attributes].merge(id: related_id)
+                { **(included_object[:attributes] || {}), id: related_id }.tap do |body|
+                  body[:relationships] = included_object[:relationships] if included_object.key?(:relationships) # Pass nested relationships
+                end
               else
                 relationship.dig(:id)
               end

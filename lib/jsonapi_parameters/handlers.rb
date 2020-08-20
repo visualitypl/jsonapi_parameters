@@ -29,7 +29,7 @@ module JsonApi
         resource_handlers[resource_key.to_sym] = handler_key.to_sym
       end
 
-      def reset_handlers!
+      def reset_handlers
         @handlers = DEFAULT_HANDLER_SET.dup
         @resource_handlers = {}
       end
