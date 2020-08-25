@@ -8,6 +8,16 @@ class Translator
 end
 
 describe Translator do
+  context 'TranslatorError' do
+    it 'is risen when main key could not be created' do
+      translator = described_class.new
+
+      translator.instance_variable_set(:@jsonapi_unsafe_hash, {})
+
+      expect { translator.send(:jsonapi_main_key) }.to raise_error { JsonApi::Parameters::TranslatorError }
+    end
+  end
+
   context 'without enforced underscore translation' do
     describe 'plain hash parameters' do
       JsonApi::Parameters::Testing::PAIRS.each do |case_type_name, kases|

@@ -49,7 +49,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
       expect { translator.jsonapify(input, custom_stack_limit: 4) }.not_to raise_error # To ensure this is passing
     end
 
-     it 'can be reset' do
+    it 'can be reset' do
       input = select_input_by_name('POST create payloads', 'triple-nested payload')
       input[:included] << { id: '3', type: 'entity', relationships: { subentity: { data: { type: 'entity', id: '4' } } } }
       translator = described_class.new

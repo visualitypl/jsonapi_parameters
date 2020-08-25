@@ -19,8 +19,9 @@ module JsonApi::Parameters
     @jsonapi_unsafe_hash = ensure_naming(params, naming_convention)
 
     formed_parameters
-  rescue => err
-    Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! # Validate the payload and raise errors...
+  rescue StandardError => err
+    # Validate the payload and raise errors...
+    Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! unless JsonApi::Parameters.suppress_validation_errors
 
     raise err # ... or if there were none, re-raise initial error
   end
@@ -42,7 +43,7 @@ module JsonApi::Parameters
   end
 
   def jsonapi_main_key
-    @jsonapi_unsafe_hash.dig(:data, :type)&.singularize || ''
+    @jsonapi_unsafe_hash.dig(:data, :type)&.singularize || raise(TranslatorError)
   end
 
   def jsonapi_main_body
@@ -122,4 +123,6 @@ module JsonApi::Parameters
 
     val
   end
+
+  class TranslatorError < StandardError; end
 end

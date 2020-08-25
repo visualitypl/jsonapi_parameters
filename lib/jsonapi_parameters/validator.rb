@@ -22,7 +22,7 @@ module JsonApi::Parameters
 
       private
 
-      # Thanks to https://polythematik.de/2020/02/17/ruby-json-schema/
+      # Based on & thanks to https://polythematik.de/2020/02/17/ruby-json-schema/
       def nice_error(err)
         case err['type']
         when 'required'
@@ -32,7 +32,7 @@ module JsonApi::Parameters
         when 'minLength'
           "path '#{err['data_pointer']}' is not long enough (min #{err['schema']['minLength']})"
         else
-          "there is a problem with path '#{err['data_pointer']}'. Please check your input."
+          "path '#{err['data_pointer']}' is invalid according to the JsonApi schema"
         end
       end
     end

@@ -42,3 +42,5 @@ end
 def select_input_by_name(category, name)
   select_io_pair_by_name(category, name)[0]
 end
+
+RSpec::Expectations.configuration.on_potential_false_positives = :nothing
