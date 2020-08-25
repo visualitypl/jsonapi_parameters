@@ -59,20 +59,6 @@ def create_params
 end
 ```
 
-#### Relationships
-
-JsonApi::Parameters supports ActiveRecord relationship parameters, including [nested attributes](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html).
-
-Relationship parameters are being read from two optional trees:  
-
-* `relationships`,
-* `included`
-
-If you provide any related resources in the `relationships` table, this gem will also look for corresponding, `included` resources and their attributes. Thanks to that this gem supports nested attributes, and will try to translate these included resources and pass them along.
-
-For more examples take a look at [Relationships](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationships) in the wiki documentation.
-
-
 ### Plain Ruby / outside Rails
 
 ```ruby
@@ -88,6 +74,24 @@ translator = Translator.new
 
 translator.jsonapify(params)
 ```
+
+
+## Relationships
+
+JsonApi::Parameters supports ActiveRecord relationship parameters, including [nested attributes](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html).
+
+Relationship parameters are being read from two optional trees:  
+
+* `relationships`,
+* `included`
+
+If you provide any related resources in the `relationships` table, this gem will also look for corresponding, `included` resources and their attributes. Thanks to that this gem supports nested attributes, and will try to translate these included resources and pass them along.
+
+For more examples take a look at [Relationships](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationships) in the wiki documentation.
+
+If you need custom relationship handling (for instance, if you have a relationship named `scissors` that is plural, but it actually is a single entity), you can use Handlers to define appropriate behaviour.
+
+Read more at [Relationship Handlers](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationship-handlers).
  
 ## Mime Type
 
@@ -102,7 +106,7 @@ Because of that, it is a potential vector of attack.
 
 For this reason we have introduced a default limit of stack levels that JsonApi::Parameters will go down through while parsing the payloads. 
 
-This default limit is 3, and can be overwritten by specifying the custom limit.
+This default limit is 3, and can be overwritten by specifying the custom limit. When the limit is exceeded, a `StackLevelTooDeepError` is risen.
 
 #### Ruby
 ```ruby
@@ -139,11 +143,31 @@ ensure
 end
 ```
 
-## Customization
+## Validations
 
-If you need custom relationship handling (for instance, if you have a relationship named `scissors` that is plural, but it actually is a single entity), you can use Handlers to define appropriate behaviour.
+JsonApi::Parameters is validating your payloads **ONLY** when an error occurs. **This means that unless there was an exception, your payload will not be validated.** 
 
-Read more at [Relationship Handlers](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationship-handlers).
+Reason for that is we prefer to avoid any performance overheads, and in most cases the validation errors will only be useful in the development environments, and mostly in the early parts of the implementation process. Our decision was to leave the validation to happen only in case JsonApi::Parameters failed to accomplish its task. 
+
+The validation happens with the use of jsonapi.org's JSON schema draft 6, available [here](https://jsonapi.org/faq/#is-there-a-json-schema-describing-json-api), and a gem called [JSONSchemer](https://github.com/davishmcclurg/json_schemer).
+
+If you would prefer to suppress validation errors, you can do so by declaring it globally in your application: 
+
+```ruby
+# config/initializers/jsonapi_parameters.rb
+
+JsonApi::Parameters.suppress_validation_errors = true
+```
+
+If you would prefer to prevalidate every payload _before_ attempting to fully parse it, you can do so by enforcing prevalidation: 
+
+```ruby
+# config/initializers/jsonapi_parameters.rb
+
+JsonApi::Parameters.enforce_prevalidation = true
+```
+
+It is important to note that setting suppression and prevalidation is exclusive. If both settings are set to `true` no prevalidation will happen.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

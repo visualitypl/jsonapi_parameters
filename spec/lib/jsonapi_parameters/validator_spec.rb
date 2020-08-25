@@ -10,18 +10,47 @@ describe JsonApi::Parameters::Validator do # rubocop:disable RSpec/FilePath
     end
 
     context 'validations' do
+      let(:translator) do
+        class Translator
+          include JsonApi::Parameters
+        end
+
+        Translator.new
+      end
+
+      describe 'with prevalidation enforced' do
+        before { JsonApi::Parameters.enforce_prevalidation = true }
+
+        after { JsonApi::Parameters.enforce_prevalidation = false }
+
+        it 'raises validation errors' do
+          payload = { payload: { sample: 'value' } }
+
+          expect { translator.jsonapify(payload) }.to raise_error(ActiveModel::ValidationError)
+        end
+
+        it 'does not raise TranslatorError' do
+          payload = { payload: { sample: 'value' } }
+
+          expect { translator.jsonapify(payload) }.not_to raise_error(JsonApi::Parameters::TranslatorError)
+        end
+
+        it 'does not call formed_parameters' do
+          payload = { payload: { sample: 'value' } }
+
+          expect(translator).not_to receive(:formed_parameters)
+
+          begin
+            translator.jsonapify(payload)
+          rescue ActiveModel::ValidationError => _ # rubocop:disable Lint/HandleExceptions
+          end
+        end
+      end
+
       describe 'suppression enabled' do
         before { JsonApi::Parameters.suppress_validation_errors = true }
 
         after { JsonApi::Parameters.suppress_validation_errors = false }
-
-        let(:translator) do
-          class Translator
-            include JsonApi::Parameters
-          end
-
-          Translator.new
-        end
 
         it 'does not raise validation errors' do
           payload = { payload: { sample: 'value' } }

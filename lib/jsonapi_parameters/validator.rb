@@ -4,6 +4,12 @@ require 'json_schemer'
 module JsonApi::Parameters
   SCHEMA_PATH = 'spec/support/jsonapi_schema.json'.freeze
 
+  private
+
+  def should_prevalidate?
+    JsonApi::Parameters.enforce_prevalidation && !JsonApi::Parameters.suppress_validation_errors
+  end
+
   class Validator
     include ActiveModel::Validations
 
