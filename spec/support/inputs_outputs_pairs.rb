@@ -6,8 +6,8 @@ module JsonApi::Parameters::Testing
         { test: { name: 'test name' } }
       ] },
       { 'single root, client generated id' => [
-        { data: { id: 22, type: 'tests', attributes: { name: 'test name' } } },
-        { test: { id: 22, name: 'test name' } }
+        { data: { id: '22', type: 'tests', attributes: { name: 'test name' } } },
+        { test: { id: '22', name: 'test name' } }
       ] },
       { 'single root, multiple attributes' => [
         { data: { type: 'tests', attributes: { name: 'test name', age: 21 } } },
@@ -112,7 +112,7 @@ module JsonApi::Parameters::Testing
               photographer: {
                 data: {
                   type: 'people',
-                  id: 9
+                  id: '9'
                 }
               }
             }
@@ -122,7 +122,7 @@ module JsonApi::Parameters::Testing
           photo: {
             title: 'Ember Hamster',
             src: 'http://example.com/images/productivity.png',
-            photographer_id: 9
+            photographer_id: '9'
           }
         }
       ] },
@@ -138,11 +138,11 @@ module JsonApi::Parameters::Testing
               photographers: {
                 data: [
                   {
-                    id: 9,
+                    id: '9',
                     type: 'people'
                   },
                   {
-                    id: 10,
+                    id: '10',
                     type: 'people'
                   }
                 ]
@@ -152,14 +152,14 @@ module JsonApi::Parameters::Testing
           included: [
             {
               type: 'people',
-              id: 10,
+              id: '10',
               attributes: {
                 name: 'Some guy'
               }
             },
             {
               type: 'people',
-              id: 9,
+              id: '9',
               attributes: {
                 name: 'Some other guy'
               }
@@ -172,11 +172,11 @@ module JsonApi::Parameters::Testing
             src: 'http://example.com/images/productivity.png',
             photographers_attributes: [
               {
-                id: 9,
+                id: '9',
                 name: 'Some other guy'
               },
               {
-                id: 10,
+                id: '10',
                 name: 'Some guy'
               }
             ]
@@ -199,13 +199,13 @@ module JsonApi::Parameters::Testing
               genres: {
                 data: [
                   {
-                    id: 74, type: 'genres'
+                    id: '74', type: 'genres'
                   }
                 ]
               },
               director: {
                 data: {
-                  id: 682, type: 'directors'
+                  id: '682', type: 'directors'
                 }
               }
             }
@@ -219,8 +219,8 @@ module JsonApi::Parameters::Testing
             content_rating: 'restricted',
             storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
             budget: 6400000,
-            director_id: 682,
-            genre_ids: [74]
+            director_id: '682',
+            genre_ids: ['74']
           }
         }
       ] },
@@ -240,13 +240,13 @@ module JsonApi::Parameters::Testing
               genres: {
                 data: [
                   {
-                    id: 74, type: 'genres'
+                    id: '74', type: 'genres'
                   }
                 ]
               },
               director: {
                 data: {
-                  id: 682, type: 'directors'
+                  id: '682', type: 'directors'
                 }
               }
             }
@@ -254,7 +254,7 @@ module JsonApi::Parameters::Testing
           included: [
             {
               type: 'directors',
-              id: 682,
+              id: '682',
               attributes: {
                 name: 'Some guy'
               }
@@ -269,8 +269,8 @@ module JsonApi::Parameters::Testing
             content_rating: 'restricted',
             storyline: 'A seemingly indestructible android is sent from 2029 to 1984 to assassinate a waitress, whose unborn son will lead humanity in a war against the machines, while a soldier from that war is sent to protect her at all costs.',
             budget: 6400000,
-            director_attributes: { id: 682, name: 'Some guy' },
-            genre_ids: [74]
+            director_attributes: { id: '682', name: 'Some guy' },
+            genre_ids: ['74']
           }
         }
       ] },
@@ -288,33 +288,34 @@ module JsonApi::Parameters::Testing
       { 'triple-nested payload' => [
         {
           data: {
+            id: '0',
             type: 'entity',
             relationships: {
               subentity: {
                 data: {
                   type: 'entity',
-                  id: 1
+                  id: '1'
                 }
               }
             }
           },
           included: [
             {
-              id: 1, type: 'entity', relationships: {
+              id: '1', type: 'entity', relationships: {
               subentity: {
                 data: {
                   type: 'entity',
-                  id: 2
+                  id: '2'
                 }
               }
             }
             },
             {
-              id: 2, type: 'entity', relationships: {
+              id: '2', type: 'entity', relationships: {
               subentity: {
                 data: {
                   type: 'entity',
-                  id: 3
+                  id: '3'
                 }
               }
             }
@@ -323,11 +324,12 @@ module JsonApi::Parameters::Testing
         },
         {
           entity: {
+            id: '0',
             subentity_attributes: {
-              id: 1,
+              id: '1',
               subentity_attributes: {
-                id: 2,
-                subentity_id: 3
+                id: '2',
+                subentity_id: '3'
               }
             }
           }
@@ -348,11 +350,11 @@ module JsonApi::Parameters::Testing
                 data: [
                   {
                     type: 'people',
-                    id: 9
+                    id: '9'
                   },
                   {
                     type: 'people',
-                    id: 10
+                    id: '10'
                   }
                 ]
               }
@@ -361,14 +363,14 @@ module JsonApi::Parameters::Testing
           included: [
             {
               type: 'people',
-              id: 10,
+              id: '10',
               attributes: {
                 name: 'Some guy'
               }
             },
             {
               type: 'people',
-              id: 9,
+              id: '9',
               attributes: {
                 name: 'Some other guy'
               }
@@ -381,11 +383,11 @@ module JsonApi::Parameters::Testing
             src: 'http://example.com/images/productivity.png',
             photographers_attributes: [
               {
-                id: 9,
+                id: '9',
                 name: 'Some other guy'
               },
               {
-                id: 10,
+                id: '10',
                 name: 'Some guy'
               }
             ]
@@ -486,19 +488,19 @@ module JsonApi::Parameters::Testing
             relationships: {
               contacts_employment_statuses: {
                 data: [
-                  { id: 444, type: "contact_employment_statuses" }
+                  { id: '444', type: "contact_employment_statuses" }
                 ]
               }
             }
           },
           included: [
             {
-              id: 444, type: "contact_employment_statuses",
+              id: '444', type: "contact_employment_statuses",
               attributes: {
                 involved_in: true, receives_submissions: false
               },
               relationships: {
-                employment_status: { data: { id: 110, type: "employment_statuses" } }
+                employment_status: { data: { id: '110', type: "employment_statuses" } }
               }
             }
           ]
@@ -507,7 +509,7 @@ module JsonApi::Parameters::Testing
           contact: {
             id: "1",
             contacts_employment_statuses_attributes: [
-              { id: 444, involved_in: true, receives_submissions: false, employment_status_id: 110 }
+              { id: '444', involved_in: true, receives_submissions: false, employment_status_id: '110' }
             ]
           }
         }
@@ -519,23 +521,23 @@ module JsonApi::Parameters::Testing
             relationships: {
               contacts_employment_statuses: {
                 data: [
-                  { id: 444, type: "contact_employment_statuses" }
+                  { id: '444', type: "contact_employment_statuses" }
                 ]
               }
             }
           },
           included: [
             {
-              id: 444, type: "contact_employment_statuses",
+              id: '444', type: "contact_employment_statuses",
               attributes: {
                 involved_in: true, receives_submissions: false
               },
               relationships: {
-                employment_status: { data: { id: 110, type: "employment_statuses" } }
+                employment_status: { data: { id: '110', type: "employment_statuses" } }
               }
             },
             {
-              id: 110, type: "employment_statuses",
+              id: '110', type: "employment_statuses",
               attributes: {
                 status: "yes",
               }
@@ -546,7 +548,7 @@ module JsonApi::Parameters::Testing
           contact: {
             id: "1",
             contacts_employment_statuses_attributes: [
-              { id: 444, involved_in: true, receives_submissions: false, employment_status_attributes: { id: 110, status: "yes" } }
+              { id: '444', involved_in: true, receives_submissions: false, employment_status_attributes: { id: '110', status: "yes" } }
             ]
           }
         }
@@ -558,19 +560,19 @@ module JsonApi::Parameters::Testing
             relationships: {
               contacts_employment_statuses: {
                 data: [
-                  { id: 444, type: "contact_employment_statuses" }
+                  { id: '444', type: "contact_employment_statuses" }
                 ]
               }
             }
           },
           included: [
             {
-              id: 444, type: "contact_employment_statuses",
+              id: '444', type: "contact_employment_statuses",
               attributes: {
                 involved_in: true, receives_submissions: false
               },
               relationships: {
-                employment_status: { data: [{ id: 110, type: "employment_statuses" }] }
+                employment_status: { data: [{ id: '110', type: "employment_statuses" }] }
               }
             },
           ]
@@ -579,7 +581,7 @@ module JsonApi::Parameters::Testing
           contact: {
             id: "1",
             contacts_employment_statuses_attributes: [
-              { id: 444, involved_in: true, receives_submissions: false, employment_status_ids: [110] }
+              { id: '444', involved_in: true, receives_submissions: false, employment_status_ids: ['110'] }
             ]
           }
         }
@@ -590,18 +592,18 @@ module JsonApi::Parameters::Testing
             id: "1", type: "contacts",
             relationships: {
               contacts_employment_status: {
-                data: { id: 444, type: "contact_employment_status" }
+                data: { id: '444', type: "contact_employment_status" }
               }
             }
           },
           included: [
             {
-              id: 444, type: "contact_employment_status",
+              id: '444', type: "contact_employment_status",
               attributes: {
                 involved_in: true, receives_submissions: false
               },
               relationships: {
-                employment_status: { data: { id: 110, type: "employment_statuses" } }
+                employment_status: { data: { id: '110', type: "employment_statuses" } }
               }
             }
           ]
@@ -610,7 +612,7 @@ module JsonApi::Parameters::Testing
           contact: {
             id: "1",
             contacts_employment_status_attributes: {
-              id: 444, involved_in: true, receives_submissions: false, employment_status_id: 110
+              id: '444', involved_in: true, receives_submissions: false, employment_status_id: '110'
             }
           }
         }

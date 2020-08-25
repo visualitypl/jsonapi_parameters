@@ -27,7 +27,7 @@ module JsonApi
               related_type = relationship.dig(:type)
 
               included_object = find_included_object(
-                related_id: related_id, related_type: related_type
+                related_id: related_id.to_s, related_type: related_type
               ) || {}
 
               # If at least one related object has not been found in `included` tree,
@@ -36,11 +36,11 @@ module JsonApi
               @with_inclusion &= !included_object.empty?
 
               if with_inclusion
-                { **(included_object[:attributes] || {}), id: related_id }.tap do |body|
+                { **(included_object[:attributes] || {}), id: related_id&.to_s }.tap do |body|
                   body[:relationships] = included_object[:relationships] if included_object.key?(:relationships) # Pass nested relationships
                 end
               else
-                relationship.dig(:id)
+                relationship.dig(:id)&.to_s
               end
             end
           end

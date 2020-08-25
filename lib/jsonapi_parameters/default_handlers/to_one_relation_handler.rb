@@ -15,9 +15,9 @@ module JsonApi
               related_id: related_id, related_type: related_type
             ) || {}
 
-            return ["#{singularize(relationship_key)}_id".to_sym, related_id] if included_object.empty?
+            return ["#{singularize(relationship_key)}_id".to_sym, related_id&.to_s] if included_object.empty?
 
-            included_object = { **(included_object[:attributes] || {}), id: related_id }.tap do |body|
+            included_object = { **(included_object[:attributes] || {}), id: related_id&.to_s }.tap do |body|
               body[:relationships] = included_object[:relationships] if included_object.key?(:relationships) # Pass nested relationships
             end
 
