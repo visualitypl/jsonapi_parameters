@@ -27,7 +27,7 @@ module JsonApi
               related_type = relationship.dig(:type)
 
               included_object = find_included_object(
-                related_id: related_id.to_s, related_type: related_type
+                related_id: related_id, related_type: related_type
               ) || {}
 
               # If at least one related object has not been found in `included` tree,
