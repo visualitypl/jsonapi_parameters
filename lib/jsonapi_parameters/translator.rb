@@ -18,12 +18,12 @@ module JsonApi::Parameters
 
     @jsonapi_unsafe_hash = ensure_naming(params, naming_convention)
 
-    Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! if should_prevalidate?
+    JsonApi::Parameters::Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! if should_prevalidate?
 
     formed_parameters
   rescue StandardError => err
     # Validate the payload and raise errors...
-    Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! unless JsonApi::Parameters.suppress_validation_errors
+    JsonApi::Parameters::Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! unless JsonApi::Parameters.suppress_validation_errors
 
     raise err # ... or if there were none, re-raise initial error
   end
