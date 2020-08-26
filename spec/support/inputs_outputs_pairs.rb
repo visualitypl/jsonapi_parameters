@@ -420,6 +420,7 @@ module JsonApi::Parameters::Testing
       { 'https://jsonapi.org/format/#crud-updating-to-one-relationships example (removal, single owner)' => [
         {
           data: {
+            id: '1',
             type: 'account',
             attributes: {
               name: 'Bob Loblaw',
@@ -434,6 +435,7 @@ module JsonApi::Parameters::Testing
         },
         {
           account: {
+            id: '1',
             name: 'Bob Loblaw',
             profile_url: 'http://example.com/images/no-nonsense.png',
             owner_id: nil

@@ -26,6 +26,10 @@ module JsonApi
               related_id = relationship.dig(:id)
               related_type = relationship.dig(:type)
 
+              unless related_id && related_type
+                raise JsonApi::Parameters::TranslatorError.new("relationship has to contain both id and type: #{relationship.inspect}")
+              end
+
               included_object = find_included_object(
                 related_id: related_id, related_type: related_type
               ) || {}
@@ -36,11 +40,11 @@ module JsonApi
               @with_inclusion &= !included_object.empty?
 
               if with_inclusion
-                { **(included_object[:attributes] || {}), id: related_id&.to_s }.tap do |body|
+                { **(included_object[:attributes] || {}), id: related_id.to_s }.tap do |body|
                   body[:relationships] = included_object[:relationships] if included_object.key?(:relationships) # Pass nested relationships
                 end
               else
-                relationship.dig(:id)&.to_s
+                related_id.to_s
               end
             end
           end
