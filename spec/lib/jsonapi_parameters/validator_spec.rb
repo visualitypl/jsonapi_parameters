@@ -74,11 +74,10 @@ describe JsonApi::Parameters::Validator do # rubocop:disable RSpec/FilePath
           Translator.new
         end
 
-        it 'does not raise validation errors' do
+        it 'raises validation errors' do
           payload = { payload: { sample: 'value' } }
 
           expect { translator.jsonapify(payload) }.to raise_error(ActiveModel::ValidationError)
-          expect { translator.jsonapify(payload) }.not_to raise_error(JsonApi::Parameters::TranslatorError)
         end
       end
 
