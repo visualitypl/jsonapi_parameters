@@ -156,7 +156,7 @@ If you would prefer to suppress validation errors, you can do so by declaring it
 ```ruby
 # config/initializers/jsonapi_parameters.rb
 
-JsonApi::Parameters.suppress_validation_errors = true
+JsonApi::Parameters.suppress_schema_validation_errors = true
 ```
 
 If you would prefer to prevalidate every payload _before_ attempting to fully parse it, you can do so by enforcing prevalidation: 
@@ -164,7 +164,7 @@ If you would prefer to prevalidate every payload _before_ attempting to fully pa
 ```ruby
 # config/initializers/jsonapi_parameters.rb
 
-JsonApi::Parameters.enforce_prevalidation = true
+JsonApi::Parameters.enforce_schema_prevalidation = true
 ```
 
 It is important to note that setting suppression and prevalidation is exclusive. If both settings are set to `true` no prevalidation will happen.

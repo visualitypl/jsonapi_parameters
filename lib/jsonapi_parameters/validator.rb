@@ -7,7 +7,7 @@ module JsonApi::Parameters
   private
 
   def should_prevalidate?
-    JsonApi::Parameters.enforce_prevalidation && !JsonApi::Parameters.suppress_validation_errors
+    JsonApi::Parameters.enforce_schema_prevalidation && !JsonApi::Parameters.suppress_schema_validation_errors
   end
 
   class Validator

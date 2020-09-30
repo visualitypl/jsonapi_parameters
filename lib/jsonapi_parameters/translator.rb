@@ -23,7 +23,7 @@ module JsonApi::Parameters
     formed_parameters
   rescue StandardError => err
     # Validate the payload and raise errors...
-    JsonApi::Parameters::Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! unless JsonApi::Parameters.suppress_validation_errors
+    JsonApi::Parameters::Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! unless JsonApi::Parameters.suppress_schema_validation_errors
 
     raise err # ... or if there were none, re-raise initial error
   end

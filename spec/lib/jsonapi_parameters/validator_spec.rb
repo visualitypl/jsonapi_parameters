@@ -19,9 +19,9 @@ describe JsonApi::Parameters::Validator do # rubocop:disable RSpec/FilePath
       end
 
       describe 'with prevalidation enforced' do
-        before { JsonApi::Parameters.enforce_prevalidation = true }
+        before { JsonApi::Parameters.enforce_schema_prevalidation = true }
 
-        after { JsonApi::Parameters.enforce_prevalidation = false }
+        after { JsonApi::Parameters.enforce_schema_prevalidation = false }
 
         it 'raises validation errors' do
           payload = { payload: { sample: 'value' } }
@@ -48,9 +48,9 @@ describe JsonApi::Parameters::Validator do # rubocop:disable RSpec/FilePath
       end
 
       describe 'suppression enabled' do
-        before { JsonApi::Parameters.suppress_validation_errors = true }
+        before { JsonApi::Parameters.suppress_schema_validation_errors = true }
 
-        after { JsonApi::Parameters.suppress_validation_errors = false }
+        after { JsonApi::Parameters.suppress_schema_validation_errors = false }
 
         it 'does not raise validation errors' do
           payload = { payload: { sample: 'value' } }
