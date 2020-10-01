@@ -2,7 +2,7 @@ require 'active_model'
 require 'json_schemer'
 
 module JsonApi::Parameters
-  SCHEMA_PATH = 'lib/jsonapi_parameters/jsonapi_schema.json'.freeze
+  SCHEMA_PATH = Pathname.new(__dir__).join('jsonapi_schema.json').to_s.freeze
 
   private
 
