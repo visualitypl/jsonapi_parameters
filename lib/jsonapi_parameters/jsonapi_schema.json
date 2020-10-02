@@ -50,7 +50,7 @@
           "$ref": "#/definitions/jsonapi"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "failure": {
       "type": "object",
@@ -75,7 +75,7 @@
           "$ref": "#/definitions/links"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "info": {
       "type": "object",
@@ -93,7 +93,7 @@
           "$ref": "#/definitions/jsonapi"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
 
     "meta": {
@@ -148,7 +148,7 @@
           "$ref": "#/definitions/meta"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "relationshipLinks": {
       "description": "A resource object **MAY** contain references to other resource objects (\"relationships\"). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.",
@@ -213,7 +213,7 @@
           {"required": ["type"]}
         ]
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
 
     "relationships": {
@@ -251,10 +251,10 @@
               {"required": ["type"]}
             ]
           },
-          "additionalProperties": false
+          "additionalProperties": true
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "relationshipToOne": {
       "description": "References to other resource objects in a to-one (\"relationship\"). Relationships can be specified by including a member in a resource's links object.",
@@ -297,7 +297,7 @@
           "$ref": "#/definitions/meta"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "pagination": {
       "type": "object",
@@ -344,7 +344,7 @@
           "$ref": "#/definitions/meta"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
 
     "error": {
@@ -390,7 +390,7 @@
           "$ref": "#/definitions/meta"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     }
   }
 }

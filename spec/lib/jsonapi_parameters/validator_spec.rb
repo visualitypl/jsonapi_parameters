@@ -91,5 +91,23 @@ describe JsonApi::Parameters::Validator do # rubocop:disable RSpec/FilePath
         expect { validator.validate! }.to raise_error(ActiveModel::ValidationError)
       end
     end
+
+    describe 'Rails specific parameters' do
+      it 'does not yield validation error on :controller, :action, :commit' do
+        rails_specific_params = [:controller, :action, :commit]
+        payload = { controller: 'examples_controller', action: 'create', commit: 'Sign up' }
+        validator = described_class.new(payload)
+
+        expect { validator.validate! }.to raise_error(ActiveModel::ValidationError)
+
+        begin
+          validator.validate!
+        rescue ActiveModel::ValidationError => err
+          rails_specific_params.each do |param|
+            expect(err.message).not_to include("Payload path '/#{param}'")
+          end
+        end
+      end
+    end
   end
 end
