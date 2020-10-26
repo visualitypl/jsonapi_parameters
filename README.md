@@ -145,5 +145,11 @@ If you need custom relationship handling (for instance, if you have a relationsh
 
 Read more at [Relationship Handlers](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationship-handlers).
 
+## Team
+
+jsonapi_parameters is maintained by Visuality's [Open Source Commitee](https://www.visuality.pl/open-source).
+
+Project started by [Jasiek Matusz](https://github.com/Marahin).
+
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
