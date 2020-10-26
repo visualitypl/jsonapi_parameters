@@ -147,9 +147,9 @@ Read more at [Relationship Handlers](https://github.com/visualitypl/jsonapi_para
 
 ## Team
 
-jsonapi_parameters is maintained by Visuality's [Open Source Commitee](https://www.visuality.pl/open-source).
-
 Project started by [Jasiek Matusz](https://github.com/Marahin).
+
+Currently, jsonapi_parameters is maintained by Visuality's [Open Source Commitee](https://www.visuality.pl/open-source).
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
