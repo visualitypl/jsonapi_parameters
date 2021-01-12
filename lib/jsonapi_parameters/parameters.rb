@@ -1,7 +1,7 @@
 module JsonApi
   module Parameters
     @ensure_underscore_translation = false
-    @client_id_prefix = 'client_id'
+    @client_id_prefix = 'cid_'
 
     class << self
       attr_accessor :ensure_underscore_translation

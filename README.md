@@ -76,8 +76,10 @@ For more examples take a look at [Relationships](https://github.com/visualitypl/
 
 You can specify client_id_prefix:
 ```
-JsonApi::Parameters.client_id_prefix = 'cid_'
+JsonApi::Parameters.client_id_prefix = 'client_'
 ```
+
+Default client_id_prefix is `cid_`
 
 All IDs starting with `JsonApi::Parameters.client_id_prefix` will be removed from params.
 
