@@ -36,7 +36,7 @@ Usually your strong parameters in controller are invoked this way:
 ```ruby
 def create
   model = Model.new(create_params)
-  
+
   if model.save
     ...
   else
@@ -72,6 +72,124 @@ If you provide any related resources in the `relationships` table, this gem will
 
 For more examples take a look at [Relationships](https://github.com/visualitypl/jsonapi_parameters/wiki/Relationships) in the wiki documentation.
 
+##### Client generated IDs
+
+You can specify client_id_prefix:
+```
+JsonApi::Parameters.client_id_prefix = 'cid_'
+```
+
+All IDs starting with `JsonApi::Parameters.client_id_prefix` will be removed from params.
+
+In case of creating new nested resources, client will need to generate IDs sent in `relationships` and `included` parts of request.
+
+```
+{
+  "type": "multitracks",
+  "attributes": {
+    "title": "Multitrack"
+  },
+  "relationships": {
+    "tracks": {
+       "data": [
+        {
+          "type": "tracks",
+          "id": "cid_new_track"                 // Client ID for new resources -> needs to match ID in included below
+        }
+       ]
+    }
+  },
+  "included": [
+    {
+      "id": "cid_new_track",                    // Client ID for new resources -> needs to match ID in relationships below
+      "type": "tracks",
+      "attributes": {
+        "name": "Drums"
+       }
+    }
+  ]
+}
+```
+
+```
+params.from_jsonapi
+
+{
+  "multitrack" => {
+    "title" => "Multitrack",
+    "tracks_attributes" => {
+      "0" =>  {                                 // No ID is present, so ActiveRecord#create correctly creates the new instance
+         "name" => "Drums"
+      }
+    }
+  }
+}
+```
+
+In case of updating existing nested resources and creating new ones in the same request, client needs to generate IDs for new resources and use existing ones for existing resources. Client IDs will be removed from params.
+
+
+```
+{
+  "type": "multitracks",
+  "attributes": {
+    "title": "Multitrack"
+  },
+  "relationships": {
+    "tracks": {
+       "data": [
+        {
+          "type": "tracks",
+          "id": "123"                           // Existing ID for existing resources
+        },
+        {
+          "type": "tracks",
+          "id": "cid_new_track"                 // Client ID for new resources -> needs to match ID in included below
+        }
+       ]
+    }
+  },
+  "included": [
+    {
+      "id": "123",                              // Existing ID for existing resources
+      "type": "tracks",
+      "attributes": {
+        "name": "Piano"
+       }
+    },
+    {
+      "id": "cid_new_track",                    // Client ID for new resources -> needs to match ID in relationships below
+      "type": "tracks",
+      "attributes": {
+        "name": "Drums"
+       }
+    }
+  ]
+}
+```
+
+```
+params.from_jsonapi
+
+{
+  "multitrack" => {
+    "title" => "Multitrack",
+    "tracks_attributes" => {
+      "0" =>  {
+         "id" => "123",
+         "name" => "Piano"
+      },
+      "1" =>  {                                 // No ID is present, so ActiveRecord#update correctly creates the new instance
+         "name" => "Drums"
+      }
+    }
+  }
+}
+```
+
+
+Translate
+
 
 ### Plain Ruby / outside Rails
 
@@ -88,19 +206,19 @@ translator = Translator.new
 
 translator.jsonapify(params)
 ```
- 
+
 ## Mime Type
 
-As [stated in the JSON:API specification](https://jsonapi.org/#mime-types) correct mime type for JSON:API input should be [`application/vnd.api+json`](http://www.iana.org/assignments/media-types/application/vnd.api+json). 
+As [stated in the JSON:API specification](https://jsonapi.org/#mime-types) correct mime type for JSON:API input should be [`application/vnd.api+json`](http://www.iana.org/assignments/media-types/application/vnd.api+json).
 
 This gem's intention is to make input consumption as easy as possible. Hence, it [registers this mime type for you](lib/jsonapi_parameters/core_ext/action_dispatch/http/mime_type.rb).
 
 ## Stack limit
 
 In theory, any payload may consist of infinite amount of relationships (and so each relationship may have its own, included, infinite amount of nested relationships).
-Because of that, it is a potential vector of attack. 
+Because of that, it is a potential vector of attack.
 
-For this reason we have introduced a default limit of stack levels that JsonApi::Parameters will go down through while parsing the payloads. 
+For this reason we have introduced a default limit of stack levels that JsonApi::Parameters will go down through while parsing the payloads.
 
 This default limit is 3, and can be overwritten by specifying the custom limit.
 
@@ -115,10 +233,10 @@ translator = Translator.new
 translator.jsonapify(custom_stack_limit: 4)
 
 # OR
- 
+
 translator.stack_limit = 4
 translator.jsonapify.(...)
-``` 
+```
 
 #### Rails
 ```ruby
@@ -129,7 +247,7 @@ def create_params
 end
 
 # OR
- 
+
 def create_params
     params.stack_level = 4
 
