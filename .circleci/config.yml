@@ -19,10 +19,6 @@ defaults: &defaults
           - ./*.json
 
 jobs:
-  ruby-240:
-    <<: *defaults
-    docker:
-      - image: circleci/ruby:2.4
   ruby-250:
     <<: *defaults
     docker:
@@ -67,9 +63,6 @@ workflows:
   commit:
     jobs:
       - download-and-persist-cc-test-reporter
-      - ruby-240:
-          requires:
-            - download-and-persist-cc-test-reporter
       - ruby-250:
           requires:
             - download-and-persist-cc-test-reporter
@@ -85,7 +78,6 @@ workflows:
               only:
                 - master
           requires:
-            - ruby-240
             - ruby-250
             - ruby-260
             - ruby-270
