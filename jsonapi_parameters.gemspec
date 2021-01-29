@@ -13,12 +13,12 @@ Gem::Specification.new do |spec|
   spec.license     = 'MIT'
 
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
-  spec.required_ruby_version = '>= 2.3.0'
+  spec.required_ruby_version = '>= 2.5.0'
 
   spec.add_runtime_dependency 'activesupport', '>= 4.1.8'
   spec.add_runtime_dependency 'actionpack', '>= 4.1.8'
 
-  spec.add_development_dependency 'nokogiri', '~> 1.10.5'
+  spec.add_development_dependency 'nokogiri', '~> 1.11'
   spec.add_development_dependency 'json', '~> 2.0'
   spec.add_development_dependency 'sqlite3', '~> 1.4'
   spec.add_development_dependency 'database_cleaner', '~> 1.7.0'
