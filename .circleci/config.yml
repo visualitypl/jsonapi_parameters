@@ -97,7 +97,7 @@ workflows:
           matrix:
             parameters:
               ruby_version: ["2.5", "2.6", "2.7", "3.0"]
-              gemfile: ["rails6.gemfile", "rails5.gemfile", "rails42.gemfile"]
+              gemfile: ["rails61.gemfile", "rails60.gemfile", "rails5.gemfile", "rails42.gemfile"]
             exclude:
               - ruby_version: "3.0"
                 gemfile: rails5.gemfile
