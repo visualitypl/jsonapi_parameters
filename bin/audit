@@ -2,4 +2,4 @@
 
 system("bundle-audit --update") || raise('Error on bundle audit update')
 gemfile_option = "--gemfile #{ENV['BUNDLE_GEMFILE']}.lock" if ENV['BUNDLE_GEMFILE'].to_s != ''
-system("bundle-audit check --update #{gemfile_option}") || raise('Error on bundle audit')
+system("bundle-audit check #{gemfile_option}") || raise('Error on bundle audit')
