@@ -12,6 +12,7 @@ references:
           bundle _1.17.3_ install;
         else
           gem install bundler;
+          bundle install;
         fi
   specs: &specs
     run:
@@ -30,7 +31,7 @@ references:
 jobs:
   download-and-persist-cc-test-reporter:
     docker:
-      - image: circleci/ruby:2.6.0
+      - image: circleci/ruby:2.6
     steps:
       - run:
           name:  Download cc-test-reporter
@@ -44,7 +45,7 @@ jobs:
             - cc-test-reporter
   upload-test-coverage:
     docker:
-      - image: circleci/ruby:2.6.0
+      - image: circleci/ruby:2.6
     steps:
       - attach_workspace:
           at: ~/project/tmp
