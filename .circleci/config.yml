@@ -92,6 +92,12 @@ workflows:
               gemfile: ["rails6.gemfile", "rails5.gemfile", "rails42.gemfile"]
             exclude:
               - ruby_version: "3.0"
+                gemfile: rails5.gemfile
+              - ruby_version: "3.0"
+                gemfile: rails42.gemfile
+              - ruby_version: "2.7"
+                gemfile: rails42.gemfile
+              - ruby_version: "2.6"
                 gemfile: rails42.gemfile
           requires:
             - download-and-persist-cc-test-reporter
