@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 
-gemfile_option = "--gemfile-lock #{ENV['BUNDLE_GEMFILE']}.lock" if ENV['BUNDLE_GEMFILE'].to_s != ''
-command_to_execute = "bundle exec bundle-audit check #{gemfile_option} --update"
+require 'shellwords'
+
+gemfile_option = %W[--gemfile-lock #{ENV['BUNDLE_GEMFILE']}.lock] if ENV['BUNDLE_GEMFILE'].to_s != ''
+command_to_execute =
+  Shellwords.split("bundle exec bundle-audit check --update")
+            .concat(Array.new(gemfile_option || []))
+            .compact
+            .shelljoin
 puts command_to_execute
 system(command_to_execute) || raise('Error on bundle audit')
