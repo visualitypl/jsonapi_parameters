@@ -12,7 +12,7 @@ describe AuthorsController, type: :controller do
         }
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       expect(jsonapi_response).to eq(
         data: {
@@ -62,7 +62,7 @@ describe AuthorsController, type: :controller do
         ]
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       expect(jsonapi_response[:data]).to eq(
         id: '1',
@@ -116,7 +116,7 @@ describe AuthorsController, type: :controller do
         ]
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       author_id = jsonapi_response[:data][:id]
       params = {
@@ -132,7 +132,7 @@ describe AuthorsController, type: :controller do
         }
       }
 
-      patch :update, params: params, as: :json
+      patch_with_rails_fix :update, params: params, as: :json
 
       expect(jsonapi_response[:data][:relationships][:posts][:data]).to eq([])
     end
@@ -164,7 +164,7 @@ describe AuthorsController, type: :controller do
         ]
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       expect(jsonapi_response[:data]).to eq(
         id: '1',
