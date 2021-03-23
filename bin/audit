@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
-system("bundle-audit --update") || raise('Error on bundle audit update')
-gemfile_option = "--gemfile #{ENV['BUNDLE_GEMFILE']}.lock" if ENV['BUNDLE_GEMFILE'].to_s != ''
-system("bundle-audit check #{gemfile_option}") || raise('Error on bundle audit')
+gemfile_option = "--gemfile-lock #{ENV['BUNDLE_GEMFILE']}.lock" if ENV['BUNDLE_GEMFILE'].to_s != ''
+command_to_execute = "bundle exec bundle-audit check #{gemfile_option} --update"
+puts command_to_execute
+system(command_to_execute) || raise('Error on bundle audit')

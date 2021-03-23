@@ -14,6 +14,13 @@ references:
           gem install bundler;
           bundle install;
         fi
+  gemfile_lock_audit: &gemfile_lock_audit
+    run:
+      name: audit
+      command: |
+        if [ $BUNDLE_GEMFILE != ./gemfiles/rails42.gemfile ]; then
+          bin/audit;
+        fi
   specs: &specs
     run:
       name: bin/ci
@@ -68,6 +75,7 @@ jobs:
       - checkout
       - <<: *attach_workspace_to_tmp
       - <<: *bundle
+      - <<: *gemfile_lock_audit
       - <<: *specs
       - <<: *generate_coverage
       - <<: *persist_to_workspace_coverage
