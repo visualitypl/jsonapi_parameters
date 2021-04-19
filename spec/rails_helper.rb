@@ -16,7 +16,7 @@ end
 # We are using `as: json` in specs (rails 5+),
 # but rails 4 does not require providing that and consumes only params, session and flash.
 # Integration specs does not have session and flash but we don't require them so we will skip them.
-# Integration reqests can pass also headers, but we don't use it yet.
+# Integration requests can also pass headers, but we don't use it yet.
 # https://github.com/rails/rails/blob/v6.0.3.6/actionpack/lib/action_dispatch/testing/integration.rb#L211
 # Please use this helper methods and use keyword arguments.
 # For get requests you should provide another helper integrating params, etc.
