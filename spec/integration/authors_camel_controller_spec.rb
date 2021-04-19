@@ -12,7 +12,7 @@ describe AuthorsCamelController, type: :controller do
         }
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       expect(jsonapi_response).to eq(
         data: {
@@ -62,7 +62,7 @@ describe AuthorsCamelController, type: :controller do
         ]
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       expect(jsonapi_response[:data]).to eq(
         id: '1',

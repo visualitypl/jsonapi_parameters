@@ -7,13 +7,13 @@ describe ActionController::Parameters do
 
   describe '#from_jsonapi' do
     it 'returns new object' do
-      params = described_class.new
+      params = described_class.new test: 1
 
       expect(params.from_jsonapi.hash).not_to eq(params.hash)
     end
 
     it 'is memoized' do
-      params = described_class.new
+      params = described_class.new test: 1
 
       expect(params.from_jsonapi.hash).to eq(params.from_jsonapi.hash)
     end

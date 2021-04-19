@@ -7,7 +7,7 @@ describe 'Stack Tester requests', type: :request do
 
       payload[:included] << { id: 3, type: 'entity', relationships: { subentity: { data: { type: 'entity', id: 4 } } } }
 
-      post stack_default_path, params: payload
+      post_with_rails_fix stack_default_path, params: payload
 
       expect(response).to have_http_status(500)
     end
@@ -27,7 +27,7 @@ describe 'Stack Tester requests', type: :request do
 
       payload[:included] << { id: 3, type: 'entity', relationships: { subentity: { data: { type: 'entity', id: 4 } } } }
 
-      post stack_custom_limit_path, params: payload
+      post_with_rails_fix stack_custom_limit_path, params: payload
 
       expect(response).to have_http_status(200)
     end
@@ -37,7 +37,7 @@ describe 'Stack Tester requests', type: :request do
 
       payload[:included] << { id: 3, type: 'entity', relationships: { subentity: { data: { type: 'entity', id: 4 } } } }
 
-      post short_stack_custom_limit_path, params: payload
+      post_with_rails_fix short_stack_custom_limit_path, params: payload
 
       expect(response).to have_http_status(200)
     end

@@ -2,6 +2,5 @@
 
 set -e
 
-bundle exec bin/audit
 bundle exec bin/quality
 bundle exec bin/spec
