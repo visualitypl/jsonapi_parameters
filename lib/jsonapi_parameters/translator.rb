@@ -16,15 +16,26 @@ module JsonApi::Parameters
 
     return params if params.nil? || params.empty?
 
-    @jsonapi_unsafe_hash = if naming_convention != :snake || JsonApi::Parameters.ensure_underscore_translation
-                             params = params.deep_transform_keys { |key| key.to_s.underscore.to_sym }
-                             params[:data][:type] = params[:data][:type].underscore if params.dig(:data, :type)
-                             params
-                           else
-                             params.deep_symbolize_keys
-                           end
+    @jsonapi_unsafe_hash = ensure_naming(params, naming_convention)
+
+    JsonApi::Parameters::Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! if should_prevalidate?
 
     formed_parameters
+  rescue StandardError => err
+    # Validate the payload and raise errors...
+    JsonApi::Parameters::Validator.new(@jsonapi_unsafe_hash.deep_dup).validate! unless JsonApi::Parameters.suppress_schema_validation_errors
+
+    raise err # ... or if there were none, re-raise initial error
+  end
+
+  def ensure_naming(params, naming_convention)
+    if naming_convention != :snake || JsonApi::Parameters.ensure_underscore_translation
+      params = params.deep_transform_keys { |key| key.to_s.underscore.to_sym }
+      params[:data][:type] = params[:data][:type].underscore if params.dig(:data, :type)
+      params
+    else
+      params.deep_symbolize_keys
+    end
   end
 
   def formed_parameters
@@ -34,7 +45,7 @@ module JsonApi::Parameters
   end
 
   def jsonapi_main_key
-    @jsonapi_unsafe_hash.dig(:data, :type)&.singularize || ''
+    @jsonapi_unsafe_hash.dig(:data, :type)&.singularize || raise(TranslatorError)
   end
 
   def jsonapi_main_body
@@ -114,4 +125,6 @@ module JsonApi::Parameters
 
     val
   end
+
+  class TranslatorError < StandardError; end
 end
