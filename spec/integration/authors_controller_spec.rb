@@ -168,7 +168,7 @@ describe AuthorsController, type: :controller do
         ]
       }
 
-      post :create, params: params
+      post_with_rails_fix :create, params: params
 
       author_id = jsonapi_response[:data][:id]
       post_id = jsonapi_response[:data][:relationships][:posts][:data].first[:id]
