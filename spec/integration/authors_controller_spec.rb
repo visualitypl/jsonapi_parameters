@@ -214,7 +214,7 @@ describe AuthorsController, type: :controller do
         ]
       }
 
-      patch :update, params: params, as: :json
+      patch_with_rails_fix :update, params: params, as: :json
 
       expect(Post.first.title).to eq('Updated title')
       expect(Post.first.body).to eq('Updated body')
