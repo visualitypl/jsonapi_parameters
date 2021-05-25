@@ -392,6 +392,77 @@ module JsonApi::Parameters::Testing
           }
         }
       ] },
+      { 'https://jsonapi.org/format/#crud example (added new, modified existing photographers)' => [
+        {
+          data: {
+            type: 'photos',
+            attributes: {
+              title: 'Ember Hamster',
+              src: 'http://example.com/images/productivity.png'
+            },
+            relationships: {
+              photographers: {
+                data: [
+                  {
+                    type: 'people',
+                    id: 9
+                  },
+                  {
+                    type: 'people',
+                    id: 10
+                  },
+                  {
+                    type: 'people',
+                    id: 'cid_new_person'
+                  },
+                ]
+              }
+            }
+          },
+          included: [
+            {
+              type: 'people',
+              id: 10,
+              attributes: {
+                name: 'Some guy'
+              }
+            },
+            {
+              type: 'people',
+              id: 9,
+              attributes: {
+                name: 'Some other guy'
+              }
+            },
+            {
+              type: 'people',
+              id: 'cid_new_person',
+              attributes: {
+                name: 'New guy'
+              }
+            }
+          ]
+        },
+        {
+          photo: {
+            title: 'Ember Hamster',
+            src: 'http://example.com/images/productivity.png',
+            photographers_attributes: [
+              {
+                id: 9,
+                name: 'Some other guy'
+              },
+              {
+                id: 10,
+                name: 'Some guy'
+              },
+              {
+                name: 'New guy'
+              }
+            ]
+          }
+        }
+      ] },
       { 'https://jsonapi.org/format/#crud-updating-to-many-relationships example (removal, all photographers)' => [
         {
           data: {
