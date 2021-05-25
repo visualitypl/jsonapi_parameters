@@ -7,7 +7,7 @@ class Translator
   include JsonApi::Parameters
 end
 
-describe Translator do
+describe Translator do # rubocop:disable RSpec/FilePath
   context 'with default client id prefix' do
     it 'ignores IDs with default client id prefix' do
       input = {
@@ -31,7 +31,7 @@ describe Translator do
                 {
                   type: 'people',
                   id: 'cid_new_person'
-                },
+                }
               ]
             }
           }
@@ -111,7 +111,7 @@ describe Translator do
                 {
                   type: 'people',
                   id: 'client_id_new_person'
-                },
+                }
               ]
             }
           }
@@ -191,7 +191,7 @@ describe Translator do
                 {
                   type: 'people',
                   id: 'cid_new_person'
-                },
+                }
               ]
             }
           }
