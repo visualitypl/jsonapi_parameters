@@ -23,6 +23,10 @@ module JsonApi
                 included_object_enum[:type] == related_type
             end
           end
+
+          def client_generated_id?(related_id)
+            related_id.to_s.starts_with?(JsonApi::Parameters.client_id_prefix)
+          end
         end
       end
     end
