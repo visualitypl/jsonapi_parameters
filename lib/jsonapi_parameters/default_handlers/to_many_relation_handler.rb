@@ -36,10 +36,7 @@ module JsonApi
               @with_inclusion &= !included_object.empty?
 
               if with_inclusion
-                { **(included_object[:attributes] || {}) }.tap do |body|
-                  body[:id] = related_id unless client_generated_id?(related_id)
-                  body[:relationships] = included_object[:relationships] if included_object.key?(:relationships) # Pass nested relationships
-                end
+                build_included_object(included_object, related_id)
               else
                 relationship.dig(:id)
               end
