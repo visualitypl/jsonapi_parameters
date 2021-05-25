@@ -25,10 +25,14 @@ module JsonApi
           end
 
           def build_included_object(included_object, related_id)
-            { **(included_object[:attributes] || {}) }.tap do |body|
+            included_object_base(included_object).tap do |body|
               body[:id] = related_id unless client_generated_id?(related_id)
               body[:relationships] = included_object[:relationships] if included_object.key?(:relationships) # Pass nested relationships
             end
+          end
+
+          def included_object_base(included_object)
+            { **(included_object[:attributes] || {}) }
           end
 
           def client_generated_id?(related_id)
