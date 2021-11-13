@@ -36,6 +36,8 @@ module JsonApi
           end
 
           def client_generated_id?(related_id)
+            return false unless JsonApi::Parameters.client_id_prefix.present?
+
             related_id.to_s.starts_with?(JsonApi::Parameters.client_id_prefix)
           end
         end

@@ -79,9 +79,9 @@ You can specify client_id_prefix:
 JsonApi::Parameters.client_id_prefix = 'client_'
 ```
 
-Default client_id_prefix is `cid_`
+Default client_id_prefix is `nil`
 
-All IDs starting with `JsonApi::Parameters.client_id_prefix` will be removed from params.
+If defined, all IDs starting with `JsonApi::Parameters.client_id_prefix` will be removed from params.
 
 In case of creating new nested resources, client will need to generate IDs sent in `relationships` and `included` parts of request.
 
