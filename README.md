@@ -74,14 +74,14 @@ For more examples take a look at [Relationships](https://github.com/visualitypl/
 
 ##### Client generated IDs
 
-You can specify client_id_prefix:
+You can specify ignore_ids_with_prefix:
 ```
-JsonApi::Parameters.client_id_prefix = 'client_'
+JsonApi::Parameters.ignore_ids_with_prefix = 'client_'
 ```
 
-Default client_id_prefix is `nil`
+ignore_ids_with_prefix is by default set to `nil`
 
-If defined, all IDs starting with `JsonApi::Parameters.client_id_prefix` will be removed from params.
+If defined, all IDs starting with `JsonApi::Parameters.ignore_ids_with_prefix` will be removed from params.
 
 In case of creating new nested resources, client will need to generate IDs sent in `relationships` and `included` parts of request.
 

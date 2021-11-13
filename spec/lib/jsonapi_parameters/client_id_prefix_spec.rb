@@ -8,7 +8,7 @@ class Translator
 end
 
 describe Translator do # rubocop:disable RSpec/FilePath
-  context 'when client id prefix is not set' do
+  context 'when ignore_ids_with_prefix is not set' do
     it 'does not ignore any ID sent by the client' do
       input = {
         data: {
@@ -87,9 +87,9 @@ describe Translator do # rubocop:disable RSpec/FilePath
     end
   end
 
-  context 'when client id prefix is set' do
-    it 'ignores IDs with client id prefix' do
-      JsonApi::Parameters.client_id_prefix = 'client_id_'
+  context 'when ignore_ids_with_prefix is set' do
+    it 'ignores IDs with starting with ignore_ids_with_prefix' do
+      JsonApi::Parameters.ignore_ids_with_prefix = 'client_id_'
 
       input = {
         data: {
@@ -165,7 +165,7 @@ describe Translator do # rubocop:disable RSpec/FilePath
       translated_input = described_class.new.jsonapify(input)
       expect(HashDiff.diff(translated_input, predicted_output)).to eq([])
 
-      JsonApi::Parameters.client_id_prefix = nil
+      JsonApi::Parameters.ignore_ids_with_prefix = nil
     end
   end
 end

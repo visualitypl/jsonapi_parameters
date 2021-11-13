@@ -137,7 +137,7 @@ describe AuthorsController, type: :controller do
       expect(jsonapi_response[:data][:relationships][:posts][:data]).to eq([])
     end
 
-    context 'when client id prefix is defined' do
+    context 'when ignore_ids_with_prefix is defined' do
       it 'creates an author with a post, and then adds a new post and updates existing one' do
         params = {
           data: {
@@ -215,7 +215,7 @@ describe AuthorsController, type: :controller do
           ]
         }
 
-        JsonApi::Parameters.client_id_prefix = 'cid_'
+        JsonApi::Parameters.ignore_ids_with_prefix = 'cid_'
 
         patch_with_rails_fix :update, params: params, as: :json
 
@@ -226,11 +226,11 @@ describe AuthorsController, type: :controller do
         expect(Post.last.body).to eq('New body')
         expect(Post.last.category_name).to eq('New category')
 
-        JsonApi::Parameters.client_id_prefix = nil
+        JsonApi::Parameters.ignore_ids_with_prefix = nil
       end
     end
 
-    context 'when client id prefix is not defined' do
+    context 'when ignore_ids_with_prefix is not defined' do
       it 'raises an error for not being able to find a record with client defined ID' do
         params = {
           data: {
