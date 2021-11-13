@@ -138,7 +138,9 @@ describe AuthorsController, type: :controller do
     end
 
     context 'when ignore_ids_with_prefix is defined' do
-      it 'creates an author with a post, and then adds a new post and updates existing one' do
+      it 'creates an author with a post, and then adds a new post and updates existing one' do # rubocop:disable RSpec/ExampleLength
+        JsonApi::Parameters.ignore_ids_with_prefix = 'cid_'
+
         params = {
           data: {
             type: 'authors',
@@ -149,7 +151,7 @@ describe AuthorsController, type: :controller do
               posts: {
                 data: [
                   {
-                    id: '123',
+                    id: 'cid_new_post',
                     type: 'post'
                   }
                 ]
@@ -158,8 +160,8 @@ describe AuthorsController, type: :controller do
           },
           included: [
             {
+              id: 'cid_new_post',
               type: 'post',
-              id: '123',
               attributes: {
                 title: 'Some title',
                 body: 'Some body that I used to love',
@@ -214,8 +216,6 @@ describe AuthorsController, type: :controller do
             }
           ]
         }
-
-        JsonApi::Parameters.ignore_ids_with_prefix = 'cid_'
 
         patch_with_rails_fix :update, params: params, as: :json
 
