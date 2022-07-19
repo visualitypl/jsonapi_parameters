@@ -4,3 +4,4 @@ set -e
 
 bundle exec bin/quality
 bundle exec bin/spec
+bundle exec bin/mutant
